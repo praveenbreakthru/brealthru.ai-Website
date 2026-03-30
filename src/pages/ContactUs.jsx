@@ -1,0 +1,364 @@
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import emailjs from '@emailjs/browser'
+
+function ContactUs() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: 'bd@breakthru.ai',
+    admin: 'admin@breakthru.ai',
+    mission: '',
+  })
+  const [status, setStatus] = useState('idle')
+  const [errorMsg, setErrorMsg] = useState('')
+  const [focusedField, setFocusedField] = useState(null)
+  const [formVisible, setFormVisible] = useState(false)
+  const formRef = useRef(null)
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setFormVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (errorMsg) setErrorMsg('')
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setErrorMsg('')
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.mission.trim()) {
+      setErrorMsg('All fields are required. Please fill in your name, email, and mission.')
+      return
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      setErrorMsg('Please enter a valid email address.')
+      return
+    }
+
+    setStatus('sending')
+
+    try {
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        to_company: formData.company,
+        to_admin: formData.admin,
+        message: formData.mission,
+      }
+
+      await emailjs.send(
+        'service_breakthru',
+        'template_contact',
+        templateParams,
+        'YOUR_PUBLIC_KEY'
+      )
+
+      setStatus('success')
+      setFormData({
+        name: '',
+        email: '',
+        company: 'bd@breakthru.ai',
+        admin: 'admin@breakthru.ai',
+        mission: '',
+      })
+    } catch {
+      setStatus('error')
+      setErrorMsg('Transmission failed. Please try again or reach us directly at bd@breakthru.ai')
+    }
+  }
+
+  const fields = [
+    {
+      num: '01',
+      label: 'Identity',
+      color: '#6c5ce7',
+      type: 'input',
+      name: 'name',
+      placeholder: 'Your Name',
+      autoComplete: 'name',
+    },
+    {
+      num: '02',
+      label: 'Coordinate',
+      color: '#00b894',
+      type: 'input',
+      name: 'email',
+      placeholder: 'your@gmail.com',
+      autoComplete: 'email',
+      inputType: 'email',
+    },
+    {
+      num: '03',
+      label: 'Company',
+      color: '#0984e3',
+      type: 'readonly',
+      value: formData.company,
+    },
+    {
+      num: '04',
+      label: 'Admin',
+      color: '#e84393',
+      type: 'readonly',
+      value: formData.admin,
+    },
+    {
+      num: '05',
+      label: 'The Mission',
+      color: '#fdcb6e',
+      type: 'textarea',
+      name: 'mission',
+      placeholder: 'Tell us about your project...',
+    },
+  ]
+
+  return (
+    <div className="contact-page">
+      <Link to="/" className="floating-back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Back to Home
+      </Link>
+      <section className="contact-hero">
+        <div className="contact-hero-bg">
+          <div className="contact-hero-grid" />
+          <div className="contact-hero-orb contact-hero-orb-1" />
+          <div className="contact-hero-orb contact-hero-orb-2" />
+          <div className="contact-hero-orb contact-hero-orb-3" />
+          <div className="contact-hero-scan" />
+        </div>
+
+        <div className="contact-hero-content">
+          <div className="contact-hero-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <span>Contact</span>
+          </div>
+
+          <h1 className="contact-hero-title">
+            LET'S BUILD
+          </h1>
+
+          <p className="contact-hero-sub">
+            Initialize a direct channel to our team.<br />
+            Tell us about your project and we'll architect the path forward.
+          </p>
+
+          <div className="contact-hero-stats">
+            <div className="contact-stat">
+              <span className="contact-stat-num">24h</span>
+              <span className="contact-stat-label">Response Time</span>
+            </div>
+            <div className="contact-stat-divider" />
+            <div className="contact-stat">
+              <span className="contact-stat-num">2</span>
+              <span className="contact-stat-label">Direct Channels</span>
+            </div>
+            <div className="contact-stat-divider" />
+            <div className="contact-stat">
+              <span className="contact-stat-num">100%</span>
+              <span className="contact-stat-label">Confidential</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="contact-body" ref={sectionRef}>
+        <div className={`contact-body-inner ${formVisible ? 'contact-body-visible' : ''}`}>
+          <div className="contact-form-area">
+            <div className="contact-form-header">
+              <span className="contact-form-tag">TRANSMISSION PROTOCOL</span>
+              <h2 className="contact-form-title">Initialize Sequence</h2>
+              <p className="contact-form-desc">
+                Fill in your details below. Your message will be transmitted to our business development team and admin simultaneously.
+              </p>
+            </div>
+
+            <form ref={formRef} className="contact-fields" onSubmit={handleSubmit}>
+              {fields.map((field, i) => (
+                <div
+                  key={field.num}
+                  className={`contact-field-card ${focusedField === field.name ? 'contact-field-focused' : ''} ${formVisible ? 'contact-field-visible' : ''}`}
+                  style={{
+                    '--field-color': field.color,
+                    animationDelay: `${i * 0.1 + 0.2}s`,
+                  }}
+                >
+                  <div className="contact-field-left">
+                    <span className="contact-field-num">{field.num}</span>
+                    <div className="contact-field-bar" />
+                  </div>
+                  <div className="contact-field-right">
+                    <label className="contact-field-label">{field.label}</label>
+                    {field.type === 'input' && (
+                      <input
+                        type={field.inputType || 'text'}
+                        name={field.name}
+                        value={formData[field.name]}
+                        onChange={handleChange}
+                        onFocus={() => setFocusedField(field.name)}
+                        onBlur={() => setFocusedField(null)}
+                        placeholder={field.placeholder}
+                        className="contact-field-input"
+                        autoComplete={field.autoComplete}
+                      />
+                    )}
+                    {field.type === 'readonly' && (
+                      <div className="contact-field-locked">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                        <span>{field.value}</span>
+                      </div>
+                    )}
+                    {field.type === 'textarea' && (
+                      <textarea
+                        name={field.name}
+                        value={formData[field.name]}
+                        onChange={handleChange}
+                        onFocus={() => setFocusedField(field.name)}
+                        onBlur={() => setFocusedField(null)}
+                        placeholder={field.placeholder}
+                        className="contact-field-textarea"
+                        rows={5}
+                      />
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {errorMsg && (
+                <div className="contact-error">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="15" y1="9" x2="9" y2="15" />
+                    <line x1="9" y1="9" x2="15" y2="15" />
+                  </svg>
+                  {errorMsg}
+                </div>
+              )}
+
+              <div className="contact-submit-area">
+                {status === 'success' ? (
+                  <div className="contact-success">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <div>
+                      <strong>Sequence initialized.</strong>
+                      <span> Transmission complete.</span>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="submit"
+                    className="contact-submit"
+                    disabled={status === 'sending'}
+                  >
+                    <span className="contact-submit-bg" />
+                    <span className="contact-submit-inner">
+                      <span className="contact-submit-text">
+                        {status === 'sending' ? 'Initializing Sequence...' : 'Initialize Sequence'}
+                      </span>
+                      <svg className="contact-submit-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </span>
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+
+          <aside className="contact-sidebar">
+            <div className="contact-side-card contact-side-card-1">
+              <div className="contact-side-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </div>
+              <h3 className="contact-side-title">Direct Channels</h3>
+              <p className="contact-side-desc">
+                Your message is transmitted simultaneously to both channels for maximum visibility.
+              </p>
+              <div className="contact-side-links">
+                <a href="mailto:bd@breakthru.ai" className="contact-side-link">
+                  <span className="contact-side-link-dot" style={{ background: '#6c5ce7' }} />
+                  bd@breakthru.ai
+                </a>
+                <a href="mailto:admin@breakthru.ai" className="contact-side-link">
+                  <span className="contact-side-link-dot" style={{ background: '#00b894' }} />
+                  admin@breakthru.ai
+                </a>
+              </div>
+            </div>
+
+            <div className="contact-side-card contact-side-card-2">
+              <div className="contact-side-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <h3 className="contact-side-title">Response SLA</h3>
+              <p className="contact-side-desc">
+                Standard response within 24 hours. Priority matters? Expect a reply within 4 hours on business days.
+              </p>
+              <div className="contact-side-sla">
+                <div className="contact-sla-bar">
+                  <div className="contact-sla-fill" />
+                </div>
+                <div className="contact-sla-labels">
+                  <span>0h</span>
+                  <span>4h</span>
+                  <span>24h</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="contact-side-card contact-side-card-3">
+              <div className="contact-side-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <h3 className="contact-side-title">Confidentiality</h3>
+              <p className="contact-side-desc">
+                All communications are encrypted and handled under strict NDA protocols. Your project details are safe with us.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+export default ContactUs
