@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const capabilities = [
   {
@@ -58,6 +58,7 @@ const capabilities = [
 function FamilyOffice() {
   const [visibleCards, setVisibleCards] = useState([])
   const cardRefs = useRef([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -88,13 +89,13 @@ function FamilyOffice() {
 
   return (
     <div className="wrapper-content">
-      <Link to="/#services" className="floating-back-btn">
+      <div onClick={() => navigate(-1)} className="floating-back-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <line x1="19" y1="12" x2="5" y2="12"/>
           <polyline points="12 19 5 12 12 5"/>
         </svg>
         Back to Services
-      </Link>
+      </div>
       {/* Hero Section */}
       <section className="content-splits hero-section fo-hero-section">
         <div className="top-bg-colors">
@@ -180,7 +181,7 @@ function FamilyOffice() {
           {capabilities.map((item, index) => (
             <div
               key={item.id}
-              className={`fo-cap-card ${visibleCards.includes(index) ? 'fo-cap-visible' : ''}`}
+              className={`fo-cap-card fo-cap-card-${index + 1} ${visibleCards.includes(index) ? 'fo-cap-visible' : ''}`}
               data-idx={index}
               ref={(el) => (cardRefs.current[index] = el)}
               style={{ animationDelay: `${index * 0.15}s` }}

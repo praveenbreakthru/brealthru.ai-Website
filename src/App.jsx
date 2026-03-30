@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import FintechStory from './pages/FintechStory'
 import ManufacturingStory from './pages/ManufacturingStory'
 import TelecomStory from './pages/TelecomStory'
+import BreakthruLabsStory from './pages/BreakthruLabsStory'
 import ContactUs from './pages/ContactUs'
 import Strategy from './pages/Strategy'
 import DataAI from './pages/DataAI'
@@ -17,6 +18,10 @@ import Engineering from './pages/Engineering'
 import Growth from './pages/Growth'
 import ProductSquads from './pages/ProductSquads'
 import FamilyOffice from './pages/FamilyOffice'
+import ServicesPage from './pages/ServicesPage'
+import IndustriesPage from './pages/IndustriesPage'
+import EcosystemPage from './pages/EcosystemPage'
+import CareersPage from './pages/CareersPage'
 
 function Header({ onToggleChatbot }) {
   const [activeDropdown, setActiveDropdown] = useState(null)
@@ -60,106 +65,16 @@ function Header({ onToggleChatbot }) {
           <span className="header-logo-text">breakthru.ai</span>
         </Link>
         <nav ref={navRef} className="nav-menu" role="navigation">
-          {/* What We Do Dropdown */}
-          <div className="nav-dropdown">
-            <button
-              className="nav-dropdown-toggle"
-              onClick={() => toggleDropdown('whatwedo')}
-              aria-expanded={activeDropdown === 'whatwedo'}
-              aria-haspopup="true"
-            >
-              <span>What We Do</span>
-              <svg
-                className={`nav-chevron ${activeDropdown === 'whatwedo' ? 'open' : ''}`}
-                width="10"
-                height="6"
-                viewBox="0 0 10 6"
-                fill="none"
-              >
-                <path
-                  d="M1 1L5 5L9 1"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-            <div className={`nav-dropdown-list ${activeDropdown === 'whatwedo' ? 'open' : ''}`}>
-              <Link
-                to="/#labs"
-                className="nav-dropdown-link"
-                onClick={() => setActiveDropdown(null)}
-              >
-                Breakthru Labs
-              </Link>
-              <Link
-                to="/#services"
-                className="nav-dropdown-link"
-                onClick={() => setActiveDropdown(null)}
-              >
-                Services
-              </Link>
-              <Link
-                to="/#industries"
-                className="nav-dropdown-link"
-                onClick={() => setActiveDropdown(null)}
-              >
-                Industries
-              </Link>
-              <Link
-                to="/#ecosystem"
-                className="nav-dropdown-link"
-                onClick={() => setActiveDropdown(null)}
-              >
-                Ecosystem
-              </Link>
-              <Link
-                to="/#careers"
-                className="nav-dropdown-link"
-                onClick={() => setActiveDropdown(null)}
-              >
-                Careers
-              </Link>
-            </div>
-          </div>
-
-          {/* Who We Are Dropdown */}
-          <div className="nav-dropdown">
-            <button
-              className="nav-dropdown-toggle"
-              onClick={() => toggleDropdown('whoweare')}
-              aria-expanded={activeDropdown === 'whoweare'}
-              aria-haspopup="true"
-            >
-              <span>Who We Are</span>
-              <svg
-                className={`nav-chevron ${activeDropdown === 'whoweare' ? 'open' : ''}`}
-                width="10"
-                height="6"
-                viewBox="0 0 10 6"
-                fill="none"
-              >
-                <path
-                  d="M1 1L5 5L9 1"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-            <div className={`nav-dropdown-list ${activeDropdown === 'whoweare' ? 'open' : ''}`}>
-              <NavLink
-                to="/aboutus"
-                className={({ isActive }) =>
-                  `nav-dropdown-link${isActive ? ' current' : ''}`
-                }
-              >
-                Our Story
-              </NavLink>
-            </div>
-          </div>
+          {/* About Us Link */}
+          <NavLink
+            to="/aboutus"
+            className={({ isActive }) =>
+              `nav-dropdown-toggle${isActive ? ' current' : ''}`
+            }
+            onClick={() => setActiveDropdown(null)}
+          >
+            <span>About Us</span>
+          </NavLink>
 
           {/* Talk to Us CTA */}
           <Link to="/contactus" className="nav-cta">
@@ -183,6 +98,50 @@ function Header({ onToggleChatbot }) {
                 Chat with us here!
               </div>
             )}
+          </div>
+
+          {/* Hamburger Menu (What We Do) */}
+          <div className="nav-dropdown nav-hamburger-dropdown">
+            <button
+              className="nav-hamburger-btn"
+              onClick={() => toggleDropdown('whatwedo')}
+              aria-expanded={activeDropdown === 'whatwedo'}
+              aria-haspopup="true"
+            >
+              <span className="hamburger-line" />
+              <span className="hamburger-line" />
+              <span className="hamburger-line" />
+            </button>
+            <div className={`nav-dropdown-list nav-hamburger-list ${activeDropdown === 'whatwedo' ? 'open' : ''}`}>
+              <Link
+                to="/services"
+                className="nav-dropdown-link"
+                onClick={() => setActiveDropdown(null)}
+              >
+                Services
+              </Link>
+              <Link
+                to="/industries"
+                className="nav-dropdown-link"
+                onClick={() => setActiveDropdown(null)}
+              >
+                Industries
+              </Link>
+              <Link
+                to="/ecosystem"
+                className="nav-dropdown-link"
+                onClick={() => setActiveDropdown(null)}
+              >
+                Ecosystem
+              </Link>
+              <Link
+                to="/careers"
+                className="nav-dropdown-link"
+                onClick={() => setActiveDropdown(null)}
+              >
+                Careers
+              </Link>
+            </div>
           </div>
         </nav>
       </div>
@@ -443,6 +402,7 @@ function App() {
         <Route path="/story/fintech" element={<FintechStory />} />
         <Route path="/story/manufacturing" element={<ManufacturingStory />} />
         <Route path="/story/telecom" element={<TelecomStory />} />
+        <Route path="/story/breakthru-labs" element={<BreakthruLabsStory />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/strategy" element={<Strategy />} />
         <Route path="/data-ai" element={<DataAI />} />
@@ -450,6 +410,10 @@ function App() {
         <Route path="/growth" element={<Growth />} />
         <Route path="/product-squads" element={<ProductSquads />} />
         <Route path="/family-office" element={<FamilyOffice />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/industries" element={<IndustriesPage />} />
+        <Route path="/ecosystem" element={<EcosystemPage />} />
+        <Route path="/careers" element={<CareersPage />} />
       </Routes>
     </>
   )
