@@ -6940,7 +6940,7 @@ img {
 .ls-product-card {
   position: relative;
   width: 480px;
-  min-height: 420px;
+  min-height: 500px;
   border-radius: 24px;
   overflow: hidden;
   cursor: pointer;
@@ -7090,6 +7090,29 @@ img {
   height: 5px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
+}
+
+.ls-case-study-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.ls-case-study-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .ls-product-card-glow {
