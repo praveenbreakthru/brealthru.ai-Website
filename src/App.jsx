@@ -7,7 +7,6 @@ import TalentAI from './pages/TalentAI'
 import GCC from './pages/GCC'
 import OurStory from './pages/OurStory'
 import Home from './pages/Home'
-import Chatbot from './components/Chatbot'
 import FintechStory from './pages/FintechStory'
 import ManufacturingStory from './pages/ManufacturingStory'
 import TelecomStory from './pages/TelecomStory'
@@ -26,8 +25,15 @@ import CareersPage from './pages/CareersPage'
 
 function Header({ onToggleChatbot }) {
   const [activeDropdown, setActiveDropdown] = useState(null)
+  const [showMicHint, setShowMicHint] = useState(false)
   const navRef = useRef(null)
   const location = useLocation()
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowMicHint(true), 1500)
+    const hideTimer = setTimeout(() => setShowMicHint(false), 6500)
+    return () => { clearTimeout(timer); clearTimeout(hideTimer) }
+  }, [])
 
   useEffect(() => {
     setActiveDropdown(null)
@@ -74,6 +80,25 @@ function Header({ onToggleChatbot }) {
           <Link to="/contactus" className="nav-cta">
             Talk to us !
           </Link>
+
+          {/* Mic Chatbot Button */}
+          <div className="header-mic-wrapper">
+            <button onClick={() => { onToggleChatbot(); setShowMicHint(false) }} className="header-mic-btn" title="Chat with us">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+              <span className="mic-pulse-ring" />
+            </button>
+            {showMicHint && (
+              <div className="mic-hint-tooltip">
+                <span className="mic-hint-arrow" />
+                Chat with us here!
+              </div>
+            )}
+          </div>
 
           {/* Hamburger Menu (What We Do) */}
           <div className="nav-dropdown nav-hamburger-dropdown">
@@ -364,56 +389,33 @@ function App() {
   const closeChatbot = () => setChatbotOpen(false)
 
   return (
-    <div className={`main-layout-wrapper ${chatbotOpen ? 'sidebar-open' : ''}`}>
-      <div className="main-content-area">
-        <Header onToggleChatbot={toggleChatbot} />
-        <Routes>
-          <Route path="/" element={<Home chatbotOpen={chatbotOpen} onCloseChatbot={closeChatbot} />} />
-          <Route path="/future-of-consultingai" element={<ConsultingAI />} />
-          <Route path="/future-of-aingineering" element={<AIngineering />} />
-          <Route path="/future-of-xperienceai" element={<XperienceAI />} />
-          <Route path="/future-of-talentai" element={<TalentAI />} />
-          <Route path="/future-of-gccai" element={<GCC />} />
-          <Route path="/aboutus" element={<OurStory />} />
-          <Route path="/story/fintech" element={<FintechStory />} />
-          <Route path="/story/manufacturing" element={<ManufacturingStory />} />
-          <Route path="/story/telecom" element={<TelecomStory />} />
-          <Route path="/story/breakthru-labs" element={<BreakthruLabsStory />} />
-          <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/strategy" element={<Strategy />} />
-          <Route path="/data-ai" element={<DataAI />} />
-          <Route path="/engineering" element={<Engineering />} />
-          <Route path="/growth" element={<Growth />} />
-          <Route path="/product-squads" element={<ProductSquads />} />
-          <Route path="/family-office" element={<FamilyOffice />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/industries" element={<IndustriesPage />} />
-          <Route path="/ecosystem" element={<EcosystemPage />} />
-          <Route path="/careers" element={<CareersPage />} />
-        </Routes>
-      </div>
-
-      <button 
-        className={`floating-ai-toggle ${chatbotOpen ? 'active' : ''}`}
-        onClick={toggleChatbot}
-        title={chatbotOpen ? "Close AI Assistant" : "Chat with AI"}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          {chatbotOpen ? (
-            <>
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </>
-          ) : (
-            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 18v4 M8 22h8"/>
-          )}
-        </svg>
-      </button>
-
-      <div className={`sidebar-chatbot-container ${chatbotOpen ? 'open' : ''}`}>
-        <Chatbot onClose={closeChatbot} variant="sidebar" />
-      </div>
-    </div>
+    <>
+      <Header onToggleChatbot={toggleChatbot} />
+      <Routes>
+        <Route path="/" element={<Home chatbotOpen={chatbotOpen} onCloseChatbot={closeChatbot} />} />
+        <Route path="/future-of-consultingai" element={<ConsultingAI />} />
+        <Route path="/future-of-aingineering" element={<AIngineering />} />
+        <Route path="/future-of-xperienceai" element={<XperienceAI />} />
+        <Route path="/future-of-talentai" element={<TalentAI />} />
+        <Route path="/future-of-gccai" element={<GCC />} />
+        <Route path="/aboutus" element={<OurStory />} />
+        <Route path="/story/fintech" element={<FintechStory />} />
+        <Route path="/story/manufacturing" element={<ManufacturingStory />} />
+        <Route path="/story/telecom" element={<TelecomStory />} />
+        <Route path="/story/breakthru-labs" element={<BreakthruLabsStory />} />
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/strategy" element={<Strategy />} />
+        <Route path="/data-ai" element={<DataAI />} />
+        <Route path="/engineering" element={<Engineering />} />
+        <Route path="/growth" element={<Growth />} />
+        <Route path="/product-squads" element={<ProductSquads />} />
+        <Route path="/family-office" element={<FamilyOffice />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/industries" element={<IndustriesPage />} />
+        <Route path="/ecosystem" element={<EcosystemPage />} />
+        <Route path="/careers" element={<CareersPage />} />
+      </Routes>
+    </>
   )
 }
 

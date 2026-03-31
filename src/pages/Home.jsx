@@ -29,19 +29,7 @@ const knowledgeBase = [
   { q: ['our story', 'history', 'founded', 'background'], a: 'Visit the "Our Story" page from the "Who We Are" dropdown in the navigation to learn about our journey, leadership team, and the network of partners and clients we\'ve built.' },
 ]
 
-function HeroBotAvatar({ size = 'md' }) {
-  const sizeClass = size === 'sm' ? 'cb-avatar-sm' : 'cb-avatar-md'
-  return (
-    <div className={`cb-avatar ${sizeClass}`}>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z" />
-        <path d="M12 8v4l3 3" />
-      </svg>
-    </div>
-  )
-}
-
-export function HeroChatbot({ onClose }) {
+function HeroChatbot({ onClose }) {
   const [messages, setMessages] = useState([
     { role: 'bot', text: 'Hi! I\'m the breakthru.ai assistant. Ask me anything about our services, industries, products, or partners.' }
   ])
@@ -61,7 +49,9 @@ export function HeroChatbot({ onClose }) {
 
   useEffect(() => {
     isMutedRef.current = isMuted
-    if (isMuted) window.speechSynthesis.cancel()
+    if (isMuted) {
+      window.speechSynthesis.cancel()
+    }
   }, [isMuted])
 
   const speak = (text) => {
@@ -78,17 +68,21 @@ export function HeroChatbot({ onClose }) {
   }
 
   useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
     }
     if (messages.length > 1) {
       const lastMsg = messages[messages.length - 1]
-      if (lastMsg.role === 'bot') speak(lastMsg.text)
+      if (lastMsg.role === 'bot') {
+        speak(lastMsg.text)
+      }
     }
   }, [messages])
 
   useEffect(() => {
-    return () => window.speechSynthesis.cancel()
+    return () => {
+      window.speechSynthesis.cancel()
+    }
   }, [])
 
   const findAnswer = (question) => {
@@ -126,9 +120,11 @@ export function HeroChatbot({ onClose }) {
   const handleSend = () => {
     const text = input.trim()
     if (!text) return
+
     setMessages(prev => [...prev, { role: 'user', text }])
     setInput('')
     setIsTyping(true)
+
     setTimeout(() => {
       const answer = findAnswer(text)
       setMessages(prev => [...prev, { role: 'bot', text: answer }])
@@ -150,100 +146,79 @@ export function HeroChatbot({ onClose }) {
   }
 
   return (
-    <div className="cb-card cb-card-inline" ref={chatbotRef}>
-      {/* ── Header ── */}
-      <header className="cb-header">
-        <div className="cb-header-left">
-          <HeroBotAvatar size="md" />
-          <div className="cb-header-info">
-            <span className="cb-title">AI Assistant</span>
-            <span className="cb-status">
-              <span className="cb-status-dot" />
-              Online
-            </span>
-          </div>
+    <div className="hero-chatbot" ref={chatbotRef}>
+      <div className="hero-chatbot-header">
+        <div className="hero-chatbot-left">
+          <div className="hero-chatbot-dot" />
+          <span>breakthru.ai Assistant</span>
         </div>
-
-        <div className="cb-header-actions">
+        <div className="hero-chatbot-header-actions">
           <button
-            onClick={() => setIsMuted(p => !p)}
-            className={`cb-icon-btn ${isMuted ? 'cb-icon-btn-danger' : ''}`}
+            onClick={() => setIsMuted(prev => !prev)}
+            className={`hero-chat-mute ${isMuted ? 'hero-chat-muted' : ''}`}
             title={isMuted ? 'Unmute voice' : 'Mute voice'}
           >
             {isMuted ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                 <line x1="23" y1="9" x2="17" y2="15" />
                 <line x1="17" y1="9" x2="23" y2="15" />
               </svg>
             ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                 <path d="M19.07 4.93a10 10 0 010 14.14" />
                 <path d="M15.54 8.46a5 5 0 010 7.07" />
               </svg>
             )}
           </button>
-
-          <button onClick={handleNewChat} className="cb-icon-btn" title="New chat">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12" />
-              <path d="M3 3v9h9" />
+          <button onClick={handleNewChat} className="hero-chat-new" title="New Chat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
           </button>
-
           {onClose && (
-            <button onClick={onClose} className="cb-icon-btn" title="Close">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
+            <button onClick={onClose} className="hero-chat-close" title="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
               </svg>
             </button>
           )}
         </div>
-      </header>
-
-      {/* ── Messages ── */}
-      <div className="cb-messages" ref={messagesContainerRef}>
+      </div>
+      <div className="hero-chatbot-messages" ref={messagesContainerRef}>
         {messages.map((msg, i) => (
-          <div key={i} className={`cb-msg cb-msg-${msg.role}`} style={{ animationDelay: `${i * 0.04}s` }}>
-            {msg.role === 'bot' && <HeroBotAvatar size="sm" />}
-            <div className={`cb-bubble cb-bubble-${msg.role}`}>
-              <p>{msg.text}</p>
-            </div>
+          <div key={i} className={`hero-chat-msg hero-chat-${msg.role}`}>
+            {msg.role === 'bot' && <div className="hero-chat-avatar">B</div>}
+            <div className="hero-chat-bubble">{msg.text}</div>
           </div>
         ))}
         {isTyping && (
-          <div className="cb-msg cb-msg-bot">
-            <HeroBotAvatar size="sm" />
-            <div className="cb-bubble cb-bubble-bot cb-typing">
-              <span className="cb-dot" />
-              <span className="cb-dot" />
-              <span className="cb-dot" />
+          <div className="hero-chat-msg hero-chat-bot">
+            <div className="hero-chat-avatar">B</div>
+            <div className="hero-chat-bubble hero-chat-typing">
+              <span /><span /><span />
             </div>
           </div>
         )}
         <div ref={chatEndRef} />
       </div>
-
-      {/* ── Input ── */}
-      <div className="cb-input-area">
-        <div className="cb-input-wrap">
-          <input
-            type="text"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Ask about our services..."
-            className="cb-input"
-          />
-          <button onClick={handleSend} className="cb-send" title="Send">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </button>
-        </div>
+      <div className="hero-chatbot-input">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Ask about our services, industries..."
+        />
+        <button onClick={handleSend} className="hero-chat-send">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
       </div>
     </div>
   )
@@ -311,12 +286,16 @@ function Home({ chatbotOpen, onCloseChatbot }) {
           <div className="hero-tagline-box">
             <p className={`hero-tagline-text ${taglineVisible ? 'hero-tagline-visible' : ''}`}>We build intelligent systems that don&apos;t just support — they execute.</p>
           </div>
+          {chatbotOpen && (
+            <div className="chatbot-popup-container">
+              <HeroChatbot onClose={onCloseChatbot} />
+            </div>
+          )}
         </div>
 
         <div className="home-hero-right">
           <div className="story-cards-stack">
             <Link to="/story/fintech" className="story-card story-card-1">
-              <div className="story-card-bg-gif" />
               <div className="story-card-accent" />
               <div className="story-card-inner">
                 <span className="story-card-number">STORY 01</span>
@@ -326,7 +305,6 @@ function Home({ chatbotOpen, onCloseChatbot }) {
               <div className="story-card-glow" />
             </Link>
             <Link to="/story/manufacturing" className="story-card story-card-2">
-              <div className="story-card-bg-gif" />
               <div className="story-card-accent" />
               <div className="story-card-inner">
                 <span className="story-card-number">STORY 02</span>
@@ -336,7 +314,6 @@ function Home({ chatbotOpen, onCloseChatbot }) {
               <div className="story-card-glow" />
             </Link>
             <Link to="/story/telecom" className="story-card story-card-3">
-              <div className="story-card-bg-gif" />
               <div className="story-card-accent" />
               <div className="story-card-inner">
                 <span className="story-card-number">STORY 03</span>
@@ -346,7 +323,6 @@ function Home({ chatbotOpen, onCloseChatbot }) {
               <div className="story-card-glow" />
             </Link>
             <Link to="/story/breakthru-labs" className="story-card story-card-4">
-              <div className="story-card-bg-gif" />
               <div className="story-card-accent" />
               <div className="story-card-inner">
                 <span className="story-card-number">STORY 04</span>
