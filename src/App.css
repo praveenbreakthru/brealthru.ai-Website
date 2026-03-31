@@ -659,7 +659,7 @@ img {
   left: 40px;
   z-index: 2;
   transform: rotate(2deg);
-  background: linear-gradient(135deg, #0a3d2e 0%, #1a6b4a 100%);
+  background: linear-gradient(135deg, #6b1a3d 0%, #c0296a 100%);
 }
 
 .story-card-3 {
@@ -675,7 +675,7 @@ img {
   left: 60px;
   z-index: 0;
   transform: rotate(3deg);
-  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  background: linear-gradient(135deg, #0a1628 0%, #1a3a6b 100%);
 }
 
 .story-card:hover {
@@ -804,7 +804,7 @@ img {
 }
 
 .story-card-2 .story-card-glow {
-  background: #1a6b4a;
+  background: #c0296a;
 }
 
 .story-card-3 .story-card-glow {
@@ -812,7 +812,7 @@ img {
 }
 
 .story-card-4 .story-card-glow {
-  background: #a29bfe;
+  background: #1a3a6b;
 }
 
 .story-card::before {
