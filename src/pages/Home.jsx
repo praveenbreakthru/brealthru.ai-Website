@@ -226,8 +226,14 @@ function HeroChatbot({ onClose }) {
 
 function Home({ chatbotOpen, onCloseChatbot }) {
   const [visibleSections, setVisibleSections] = useState({})
+  const [taglineVisible, setTaglineVisible] = useState(false)
   const sectionRefs = useRef({})
   const location = useLocation()
+
+  useEffect(() => {
+    const timer = setTimeout(() => setTaglineVisible(true), 400)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const hash = location.hash.slice(1)
@@ -278,7 +284,7 @@ function Home({ chatbotOpen, onCloseChatbot }) {
             <span className="hero-line hero-line-dark">RUN.</span>
           </h1>
           <div className="hero-tagline-box">
-            <p>We build intelligent systems that don&apos;t just support — they execute.</p>
+            <p className={`hero-tagline-text ${taglineVisible ? 'hero-tagline-visible' : ''}`}>We build intelligent systems that don&apos;t just support — they execute.</p>
           </div>
           {chatbotOpen && (
             <div className="chatbot-popup-container">
