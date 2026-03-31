@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
 
 const knowledgeBase = [
   { q: ['who are you', 'what is breakthru', 'about', 'company', 'what do you do'], a: 'We are breakthru.ai — the Digital Fabric. A hybrid of high-end consulting and deep engineering. We Architect, Build, and Run. No slide decks, just shipped code.' },
@@ -29,25 +28,38 @@ const knowledgeBase = [
   { q: ['our story', 'history', 'founded', 'background'], a: 'Visit the "Our Story" page from the "Who We Are" dropdown in the navigation to learn about our journey, leadership team, and the network of partners and clients we\'ve built.' },
 ]
 
-function HeroBotAvatar({ size = 'md' }) {
+function BotAvatar({ size = 'md' }) {
   const sizeClass = size === 'sm' ? 'cb-avatar-sm' : 'cb-avatar-md'
   return (
     <div className={`cb-avatar ${sizeClass}`}>
       <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="32" width="20" height="36" rx="10" fill="#f4f7f8"/>
-        <rect x="70" y="32" width="20" height="36" rx="10" fill="#f4f7f8"/>
-        <rect x="18" y="12" width="64" height="76" rx="32" fill="#f4f7f8"/>
-        <rect x="14" y="38" width="10" height="24" rx="5" fill="#4d7df6"/>
-        <rect x="76" y="38" width="10" height="24" rx="5" fill="#4d7df6"/>
-        <rect x="25" y="28" width="50" height="36" rx="16" fill="#141c2f"/>
-        <path d="M 34 44 Q 39 37 44 44" stroke="#00bcd4" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
-        <path d="M 56 44 Q 61 37 66 44" stroke="#00bcd4" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+        <rect x="10" y="32" width="20" height="36" rx="10" fill="#f4f7f8" />
+        <rect x="70" y="32" width="20" height="36" rx="10" fill="#f4f7f8" />
+        <rect x="18" y="12" width="64" height="76" rx="32" fill="#f4f7f8" />
+        <rect x="14" y="38" width="10" height="24" rx="5" fill="#4d7df6" />
+        <rect x="76" y="38" width="10" height="24" rx="5" fill="#4d7df6" />
+        <rect x="25" y="28" width="50" height="36" rx="16" fill="#141c2f" />
+        <path d="M 34 44 Q 39 37 44 44" stroke="#00bcd4" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+        <path d="M 56 44 Q 61 37 66 44" stroke="#00bcd4" strokeWidth="3.5" strokeLinecap="round" fill="none" />
       </svg>
     </div>
   )
 }
 
-export function HeroChatbot({ onClose }) {
+function TypingIndicator() {
+  return (
+    <div className="cb-msg cb-msg-bot">
+      <BotAvatar size="sm" />
+      <div className="cb-bubble cb-bubble-bot cb-typing">
+        <span className="cb-dot" />
+        <span className="cb-dot" />
+        <span className="cb-dot" />
+      </div>
+    </div>
+  )
+}
+
+export default function Chatbot({ onClose, variant = 'floating' }) {
   const defaultIntro = 'Hi! I\'m the breakthru.ai assistant. We are the Digital Fabric—a hybrid of high-end consulting and deep engineering. We Architect, Build, and Run. Ask me anything about our services or industries!'
   const [messages, setMessages] = useState([
     { role: 'bot', text: defaultIntro }
@@ -55,17 +67,10 @@ export function HeroChatbot({ onClose }) {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
-  const chatEndRef = useRef(null)
+  const messagesEndRef = useRef(null)
   const messagesContainerRef = useRef(null)
-  const chatbotRef = useRef(null)
   const isMutedRef = useRef(false)
   const hasSpokenIntroRef = useRef(false)
-
-  useEffect(() => {
-    if (chatbotRef.current) {
-      chatbotRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    }
-  }, [])
 
   useEffect(() => {
     isMutedRef.current = isMuted
@@ -86,8 +91,8 @@ export function HeroChatbot({ onClose }) {
   }
 
   useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
     if (messages.length > 0) {
       const lastMsg = messages[messages.length - 1]
@@ -99,7 +104,7 @@ export function HeroChatbot({ onClose }) {
   }, [messages])
 
   useEffect(() => {
-    // Attempt to speak on the first user interaction to handle autoplay restrictions
+    // To handle browser autoplay policies, we attempt to speak on the first user interaction
     const handleFirstInteraction = () => {
       if (!hasSpokenIntroRef.current && messages.length === 1) {
         speak(defaultIntro)
@@ -177,212 +182,130 @@ export function HeroChatbot({ onClose }) {
     setIsTyping(false)
   }
 
+  const [activeTab, setActiveTab] = useState('default')
+
+  const isSidebar = variant === 'sidebar'
+
   return (
-    <div className="cb-card cb-card-inline" ref={chatbotRef}>
-      {/* ── Header ── */}
-      <header className="cb-header">
-        <div className="cb-header-left">
-          <HeroBotAvatar size="md" />
-          <div className="cb-header-info">
-            <span className="cb-title">AI Assistant</span>
-            <span className="cb-status">
-              <span className="cb-status-dot" />
-              Online
-            </span>
+    <div className={isSidebar ? 'cb-sidebar' : 'cb-shell'}>
+      {!isSidebar && <div className="cb-glow" />}
+
+      <div className={`cb-card ${isSidebar ? 'cb-card-sidebar' : ''}`}>
+        {/* ── Header ── */}
+        <header className="cb-header">
+          <div className="cb-header-left">
+            <BotAvatar size="md" />
+            <div className="cb-header-info">
+              <span className="cb-title">AI Assistant</span>
+              <span className="cb-status">
+                <span className="cb-status-dot" />
+                Online
+              </span>
+            </div>
           </div>
-        </div>
 
-        <div className="cb-header-actions">
-          <button
-            onClick={() => setIsMuted(p => !p)}
-            className={`cb-icon-btn ${isMuted ? 'cb-icon-btn-danger' : ''}`}
-            title={isMuted ? 'Unmute voice' : 'Mute voice'}
-          >
-            {isMuted ? (
+          <div className="cb-header-actions">
+            <button
+              onClick={() => setIsMuted(p => !p)}
+              className={`cb-icon-btn ${isMuted ? 'cb-icon-btn-danger' : ''}`}
+              title={isMuted ? 'Unmute voice' : 'Mute voice'}
+            >
+              {isMuted ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M19.07 4.93a10 10 0 010 14.14" />
+                  <path d="M15.54 8.46a5 5 0 010 7.07" />
+                </svg>
+              )}
+            </button>
+
+            <button onClick={handleNewChat} className="cb-icon-btn" title="New chat">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                <line x1="23" y1="9" x2="17" y2="15" />
-                <line x1="17" y1="9" x2="23" y2="15" />
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12" />
+                <path d="M3 3v9h9" />
               </svg>
-            ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                <path d="M19.07 4.93a10 10 0 010 14.14" />
-                <path d="M15.54 8.46a5 5 0 010 7.07" />
-              </svg>
-            )}
-          </button>
+            </button>
 
-          <button onClick={handleNewChat} className="cb-icon-btn" title="New chat">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12" />
-              <path d="M3 3v9h9" />
-            </svg>
-          </button>
-
-          {onClose && (
             <button onClick={onClose} className="cb-icon-btn" title="Close">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 6 6 18" />
                 <path d="m6 6 12 12" />
               </svg>
             </button>
-          )}
-        </div>
-      </header>
-
-      {/* ── Messages ── */}
-      <div className="cb-messages" ref={messagesContainerRef}>
-        {messages.map((msg, i) => (
-          <div key={i} className={`cb-msg cb-msg-${msg.role}`} style={{ animationDelay: `${i * 0.04}s` }}>
-            {msg.role === 'bot' && <HeroBotAvatar size="sm" />}
-            <div className={`cb-bubble cb-bubble-${msg.role}`}>
-              <p>{msg.text}</p>
-            </div>
           </div>
-        ))}
-        {isTyping && (
-          <div className="cb-msg cb-msg-bot">
-            <HeroBotAvatar size="sm" />
-            <div className="cb-bubble cb-bubble-bot cb-typing">
-              <span className="cb-dot" />
-              <span className="cb-dot" />
-              <span className="cb-dot" />
-            </div>
-          </div>
-        )}
-        <div ref={chatEndRef} />
-      </div>
+        </header>
 
-      {/* ── Input ── */}
-      <div className="cb-input-area">
-        <div className="cb-input-wrap">
-          <input
-            type="text"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Ask about our services..."
-            className="cb-input"
-          />
-          <button onClick={handleSend} className="cb-send" title="Send">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
+        {/* ── Tabs ── */}
+        <div className="cb-tabs">
+          <button
+            className={`cb-tab ${activeTab === 'default' ? 'active' : ''}`}
+            onClick={() => setActiveTab('default')}
+          >
+            Chat Bot
+          </button>
+          <button
+            className={`cb-tab ${activeTab === 'experience' ? 'active' : ''}`}
+            onClick={() => setActiveTab('experience')}
+          >
+            Experience
           </button>
         </div>
+
+        {activeTab === 'default' ? (
+          <>
+            {/* ── Messages ── */}
+            <div className="cb-messages" ref={messagesContainerRef}>
+              {messages.map((msg, i) => (
+                <div key={i} className={`cb-msg cb-msg-${msg.role}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                  {msg.role === 'bot' && <BotAvatar size="sm" />}
+                  <div className={`cb-bubble cb-bubble-${msg.role}`}>
+                    <p>{msg.text}</p>
+                  </div>
+                </div>
+              ))}
+              {isTyping && <TypingIndicator />}
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* ── Input ── */}
+            <div className="cb-input-area">
+              <div className="cb-input-wrap">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask about our services..."
+                  className="cb-input"
+                />
+                <button onClick={handleSend} className="cb-send" title="Send">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                </button>
+              </div>
+              <div className="cb-powered">Powered by breakthru.ai</div>
+            </div>
+          </>
+        ) : (
+          /* ── Experience Placeholder ── */
+          <div className="cb-experience-placeholder">
+            <div className="cb-exp-icon">🚀</div>
+            <h3 className="cb-exp-title">Experience Bot is under development</h3>
+            <p className="cb-exp-desc">
+              We're building something exciting. Stay tuned!
+            </p>
+            <button className="cb-exp-btn" disabled>Coming Soon</button>
+          </div>
+        )}
       </div>
     </div>
   )
 }
-
-function Home({ chatbotOpen, onCloseChatbot }) {
-  const [visibleSections, setVisibleSections] = useState({})
-  const sectionRefs = useRef({})
-  const location = useLocation()
-
-  useEffect(() => {
-    const hash = location.hash.slice(1)
-    if (hash) {
-      const el = document.getElementById(hash)
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }, 100)
-        return
-      }
-    }
-    window.scrollTo(0, 0)
-  }, [location.hash])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('data-section')
-            if (id) setVisibleSections((prev) => ({ ...prev, [id]: true }))
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    Object.values(sectionRefs.current).forEach((el) => {
-      if (el) observer.observe(el)
-    })
-
-    return () => observer.disconnect()
-  }, [])
-
-  const setSectionRef = (id) => (el) => {
-    sectionRefs.current[id] = el
-  }
-
-  return (
-    <div className="wrapper-content">
-      {/* Hero Section */}
-      <section className="home-hero">
-        <div className="home-hero-left">
-          <h1 className="home-hero-heading">
-            <span className="hero-line hero-line-dark">ARCHITECT.</span>
-            <span className="hero-line hero-line-accent">BUILD.</span>
-            <span className="hero-line hero-line-dark">RUN.</span>
-          </h1>
-          <div className="hero-tagline-box">
-            <p>We build intelligent systems that don&apos;t just support — they execute.</p>
-          </div>
-        </div>
-
-        <div className="home-hero-right">
-          <div className="story-cards-stack">
-            <Link to="/story/fintech" className="story-card story-card-1">
-              <div className="story-card-bg-gif" />
-              <div className="story-card-accent" />
-              <div className="story-card-inner">
-                <span className="story-card-number">STORY 01</span>
-                <h3 className="story-card-title">Fintech</h3>
-                <div className="story-card-line" />
-              </div>
-              <div className="story-card-glow" />
-            </Link>
-            <Link to="/story/manufacturing" className="story-card story-card-2">
-              <div className="story-card-bg-gif" />
-              <div className="story-card-accent" />
-              <div className="story-card-inner">
-                <span className="story-card-number">STORY 02</span>
-                <h3 className="story-card-title">Manufacturing</h3>
-                <div className="story-card-line" />
-              </div>
-              <div className="story-card-glow" />
-            </Link>
-            <Link to="/story/telecom" className="story-card story-card-3">
-              <div className="story-card-bg-gif" />
-              <div className="story-card-accent" />
-              <div className="story-card-inner">
-                <span className="story-card-number">STORY 03</span>
-                <h3 className="story-card-title">Telecom</h3>
-                <div className="story-card-line" />
-              </div>
-              <div className="story-card-glow" />
-            </Link>
-            <Link to="/story/breakthru-labs" className="story-card story-card-4">
-              <div className="story-card-bg-gif" />
-              <div className="story-card-accent" />
-              <div className="story-card-inner">
-                <span className="story-card-number">STORY 04</span>
-                <h3 className="story-card-title">Breakthru Labs</h3>
-                <div className="story-card-line" />
-              </div>
-              <div className="story-card-glow" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  )
-}
-
-export default Home
