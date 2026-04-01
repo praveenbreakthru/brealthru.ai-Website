@@ -59,6 +59,17 @@ function Header({ onToggleChatbot }) {
           <span className="header-logo-text">breakthru.ai</span>
         </Link>
         <nav ref={navRef} className="nav-menu" role="navigation">
+          {/* About Us Link */}
+          <NavLink
+            to="/aboutus"
+            className={({ isActive }) =>
+              `nav-dropdown-toggle${isActive ? ' current' : ''}`
+            }
+            onClick={() => setActiveDropdown(null)}
+          >
+            <span>About Us</span>
+          </NavLink>
+
           {/* Talk to Us CTA */}
           <Link to="/contactus" className="nav-cta">
             Talk to us !
@@ -77,13 +88,6 @@ function Header({ onToggleChatbot }) {
               <span className="hamburger-line" />
             </button>
             <div className={`nav-dropdown-list nav-hamburger-list ${activeDropdown === 'whatwedo' ? 'open' : ''}`}>
-              <Link
-                to="/aboutus"
-                className="nav-dropdown-link"
-                onClick={() => setActiveDropdown(null)}
-              >
-                About Us
-              </Link>
               <Link
                 to="/services"
                 className="nav-dropdown-link"
@@ -353,16 +357,6 @@ function ConsultingAI() {
   )
 }
 
-function Footer() {
-  return (
-    <footer className="site-footer">
-      <Link to="/aboutus" className="footer-link">
-        2026@breakthru.ai
-      </Link>
-    </footer>
-  )
-}
-
 function App() {
   const [chatbotOpen, setChatbotOpen] = useState(true)
 
@@ -397,7 +391,6 @@ function App() {
           <Route path="/ecosystem" element={<EcosystemPage />} />
           <Route path="/careers" element={<CareersPage />} />
         </Routes>
-        <Footer />
       </div>
 
       <button 
@@ -405,18 +398,16 @@ function App() {
         onClick={toggleChatbot}
         title={chatbotOpen ? "Close AI Assistant" : "Chat with AI"}
       >
-        {chatbotOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        ) : (
-          <img 
-            src="https://giffiles.alphacoders.com/112/11291.gif" 
-            alt="AI Assistant" 
-            className="ai-toggle-gif"
-          />
-        )}
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          {chatbotOpen ? (
+            <>
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </>
+          ) : (
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 18v4 M8 22h8"/>
+          )}
+        </svg>
       </button>
 
       <div className={`sidebar-chatbot-container ${chatbotOpen ? 'open' : ''}`}>

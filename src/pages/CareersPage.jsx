@@ -5,6 +5,7 @@ function CareersPage() {
   const [visibleSections, setVisibleSections] = useState({})
   const [careerStats, setCareerStats] = useState({ engineers: 0, hubs: 0, clients: 0, rating: 0 })
   const sectionRefs = useRef({})
+  const hasAnimated = useRef(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -19,11 +20,6 @@ function CareersPage() {
           if (id) {
             if (entry.isIntersecting) {
               setVisibleSections((prev) => ({ ...prev, [id]: true }))
-            } else {
-              setVisibleSections((prev) => ({ ...prev, [id]: false }))
-              if (id === 'careers') {
-                setCareerStats({ engineers: 0, hubs: 0, clients: 0, rating: 0 })
-              }
             }
           }
         })
@@ -39,7 +35,9 @@ function CareersPage() {
   }, [])
 
   useEffect(() => {
-    if (!visibleSections.careers) return
+    if (!visibleSections.careers || hasAnimated.current) return
+
+    hasAnimated.current = true
 
     const targets = { engineers: 200, hubs: 3, clients: 50, rating: 4.8 }
     const duration = 2000
@@ -96,43 +94,51 @@ function CareersPage() {
             </p>
           </div>
 
-          {/* Why Join Us */}
+          {/* Why Join Us - New Design */}
           <div className="careers-why">
             <div className="careers-why-card careers-why-1">
+              <div className="careers-why-number">01</div>
               <div className="careers-why-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
                 </svg>
               </div>
               <h3 className="careers-why-title">Real Engineering</h3>
               <p className="careers-why-desc">Production code, not PowerPoints</p>
+              <div className="careers-why-line"></div>
             </div>
             <div className="careers-why-card careers-why-2">
+              <div className="careers-why-number">02</div>
               <div className="careers-why-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2a10 10 0 100 20 10 10 0 000-20z" /><path d="M12 16v-4M12 8h.01" />
                 </svg>
               </div>
               <h3 className="careers-why-title">AI-Native</h3>
               <p className="careers-why-desc">Work with cutting-edge AI/ML</p>
+              <div className="careers-why-line"></div>
             </div>
             <div className="careers-why-card careers-why-3">
+              <div className="careers-why-number">03</div>
               <div className="careers-why-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
                 </svg>
               </div>
               <h3 className="careers-why-title">Global Exposure</h3>
               <p className="careers-why-desc">Work with Fortune 500 clients</p>
+              <div className="careers-why-line"></div>
             </div>
             <div className="careers-why-card careers-why-4">
+              <div className="careers-why-number">04</div>
               <div className="careers-why-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                 </svg>
               </div>
               <h3 className="careers-why-title">Fast Growth</h3>
               <p className="careers-why-desc">Ownership from day one</p>
+              <div className="careers-why-line"></div>
             </div>
           </div>
 

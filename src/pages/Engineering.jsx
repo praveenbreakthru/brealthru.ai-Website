@@ -105,29 +105,33 @@ function Engineering() {
           />
         </div>
 
-        <div className="about-us">
-          <div className="our-services-tag our-services-tag-eng">
-            <img
-              src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bfe11fa4a378b7321682_ai-idea.png"
-              alt=""
-              className="service-icon"
-              loading="lazy"
-            />
-            <span className="service-label">Our Services</span>
+        <div className="svc-hero-content-wrapper">
+          <div className="svc-hero-text-side">
+            <div className="our-services-tag our-services-tag-eng">
+              <img
+                src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bfe11fa4a378b7321682_ai-idea.png"
+                alt=""
+                className="service-icon"
+                loading="lazy"
+              />
+              <span className="service-label">Our Services</span>
+            </div>
+
+            <h1 className="hero-heading eng-hero-heading">
+              Platform <br />
+              Engineering
+            </h1>
           </div>
 
-          <h1 className="hero-heading eng-hero-heading">
-            Platform <br />
-            Engineering
-          </h1>
-
-          <div className="hero-image-wrap">
-            <img
-              src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/680553faf7bc963f0356c0a7_J2W%E2%80%99s%20AIngineering.png"
-              alt=""
-              className="hero-illustration eng-hero-illustration"
-              loading="lazy"
-            />
+          <div className="svc-hero-image-side">
+            <div className="svc-image-box">
+              <img
+                src="https://media.licdn.com/dms/image/v2/D4D12AQHGG4J6b6OmyQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1709674937953?e=1776297600&v=beta&t=fWARdUJDFgzrCf2GGmijEOM2Hk8enVeQRP8ymzxfmnk"
+                alt="Engineering Illustration"
+                className="hero-illustration eng-hero-illustration"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
 

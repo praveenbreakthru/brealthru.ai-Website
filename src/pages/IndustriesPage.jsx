@@ -70,6 +70,26 @@ function IndustriesPage() {
             </p>
           </div>
 
+          {/* Industry Quick Nav Buttons */}
+          <div className="ind-quicknav">
+            {[
+              { label: 'BFSI', index: 0 },
+              { label: 'MANUFACTURING', index: 1 },
+              { label: 'TELECOM', index: 2 },
+              { label: 'RETAIL', index: 3 },
+              { label: 'HEALTHCARE', index: 4 },
+              { label: 'TRAVEL', index: 5 },
+            ].map((item) => (
+              <button
+                key={item.index}
+                className={`ind-quicknav-btn ${activeIndustry === item.index ? 'ind-quicknav-btn-active' : ''}`}
+                onClick={() => setActiveIndustry(item.index)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
           {/* 3D Carousel Container */}
           <div className="ind-carousel-wrapper">
             <div className="ind-carousel-track">

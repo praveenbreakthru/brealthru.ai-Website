@@ -105,29 +105,33 @@ function Strategy() {
           />
         </div>
 
-        <div className="about-us">
-          <div className="our-services-tag">
-            <img
-              src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bfe11fa4a378b7321682_ai-idea.png"
-              alt=""
-              className="service-icon"
-              loading="lazy"
-            />
-            <span className="service-label">Our Services</span>
+        <div className="svc-hero-content-wrapper">
+          <div className="svc-hero-text-side">
+            <div className="our-services-tag">
+              <img
+                src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bfe11fa4a378b7321682_ai-idea.png"
+                alt=""
+                className="service-icon"
+                loading="lazy"
+              />
+              <span className="service-label">Our Services</span>
+            </div>
+
+            <h1 className="hero-heading strategy-hero-heading">
+              Strategy &amp;<br />
+              Value Engineering
+            </h1>
           </div>
 
-          <h1 className="hero-heading strategy-hero-heading">
-            Strategy &amp;<br />
-            Value Engineering
-          </h1>
-
-          <div className="hero-image-wrap">
-            <img
-              src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bf53eed6c111d8b3c64c_2151908095%201(3).png"
-              alt=""
-              className="hero-illustration strategy-hero-illustration"
-              loading="lazy"
-            />
+          <div className="svc-hero-image-side">
+            <div className="svc-image-box">
+              <img
+                src="https://www.echelonedge.com/wp-content/themes/echelon/assets/img/echelon-data-quipo.gif"
+                alt="Strategic Planning Illustration"
+                className="hero-illustration strategy-hero-illustration"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
 

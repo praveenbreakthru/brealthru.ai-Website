@@ -109,29 +109,33 @@ function Growth() {
           />
         </div>
 
-        <div className="about-us">
-          <div className="our-services-tag our-services-tag-growth">
-            <img
-              src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bfe11fa4a378b7321682_ai-idea.png"
-              alt=""
-              className="service-icon"
-              loading="lazy"
-            />
-            <span className="service-label">Our Services</span>
+        <div className="svc-hero-content-wrapper">
+          <div className="svc-hero-text-side">
+            <div className="our-services-tag our-services-tag-growth">
+              <img
+                src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bfe11fa4a378b7321682_ai-idea.png"
+                alt=""
+                className="service-icon"
+                loading="lazy"
+              />
+              <span className="service-label">Our Services</span>
+            </div>
+
+            <h1 className="hero-heading growth-hero-heading">
+              Growth &amp;<br />
+              Ecosystem
+            </h1>
           </div>
 
-          <h1 className="hero-heading growth-hero-heading">
-            Growth &amp;<br />
-            Ecosystem
-          </h1>
-
-          <div className="hero-image-wrap">
-            <img
-              src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bf53eed6c111d8b3c64c_2151908095%201(3).png"
-              alt=""
-              className="hero-illustration growth-hero-illustration"
-              loading="lazy"
-            />
+          <div className="svc-hero-image-side">
+            <div className="svc-image-box">
+              <img
+                src="https://talentpair.com/wp-content/uploads/2023/03/main_animation_dan.gif"
+                alt="Growth Illustration"
+                className="hero-illustration growth-hero-illustration"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
 

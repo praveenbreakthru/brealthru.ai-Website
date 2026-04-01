@@ -111,29 +111,33 @@ function ProductSquads() {
           />
         </div>
 
-        <div className="about-us">
-          <div className="our-services-tag our-services-tag-ps">
-            <img
-              src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bfe11fa4a378b7321682_ai-idea.png"
-              alt=""
-              className="service-icon"
-              loading="lazy"
-            />
-            <span className="service-label">Our Services</span>
+        <div className="svc-hero-content-wrapper">
+          <div className="svc-hero-text-side">
+            <div className="our-services-tag our-services-tag-ps">
+              <img
+                src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bfe11fa4a378b7321682_ai-idea.png"
+                alt=""
+                className="service-icon"
+                loading="lazy"
+              />
+              <span className="service-label">Our Services</span>
+            </div>
+
+            <h1 className="hero-heading ps-hero-heading">
+              Product / Platform<br />
+              Squads
+            </h1>
           </div>
 
-          <h1 className="hero-heading ps-hero-heading">
-            Product / Platform<br />
-            Squads
-          </h1>
-
-          <div className="hero-image-wrap">
-            <img
-              src="https://cdn.prod.website-files.com/6803179c51bf5b2151344c46/6804bf53eed6c111d8b3c64c_2151908095%201(3).png"
-              alt=""
-              className="hero-illustration ps-hero-illustration"
-              loading="lazy"
-            />
+          <div className="svc-hero-image-side">
+            <div className="svc-image-box">
+              <img
+                src="https://liveimages.algoworks.com/new-algoworks/wp-content/uploads/2022/06/22140355/effective-product-team.gif"
+                alt="Product Squads Illustration"
+                className="hero-illustration ps-hero-illustration"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
 

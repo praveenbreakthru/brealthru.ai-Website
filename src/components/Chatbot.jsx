@@ -32,16 +32,7 @@ function BotAvatar({ size = 'md' }) {
   const sizeClass = size === 'sm' ? 'cb-avatar-sm' : 'cb-avatar-md'
   return (
     <div className={`cb-avatar ${sizeClass}`}>
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="32" width="20" height="36" rx="10" fill="#f4f7f8" />
-        <rect x="70" y="32" width="20" height="36" rx="10" fill="#f4f7f8" />
-        <rect x="18" y="12" width="64" height="76" rx="32" fill="#f4f7f8" />
-        <rect x="14" y="38" width="10" height="24" rx="5" fill="#4d7df6" />
-        <rect x="76" y="38" width="10" height="24" rx="5" fill="#4d7df6" />
-        <rect x="25" y="28" width="50" height="36" rx="16" fill="#141c2f" />
-        <path d="M 34 44 Q 39 37 44 44" stroke="#00bcd4" strokeWidth="3.5" strokeLinecap="round" fill="none" />
-        <path d="M 56 44 Q 61 37 66 44" stroke="#00bcd4" strokeWidth="3.5" strokeLinecap="round" fill="none" />
-      </svg>
+      <img src="https://giffiles.alphacoders.com/112/11291.gif" alt="AI Robot" />
     </div>
   )
 }
@@ -223,20 +214,6 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
                   <path d="M15.54 8.46a5 5 0 010 7.07" />
                 </svg>
               )}
-            </button>
-
-            <button onClick={handleNewChat} className="cb-icon-btn" title="New chat">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12" />
-                <path d="M3 3v9h9" />
-              </svg>
-            </button>
-
-            <button onClick={onClose} className="cb-icon-btn" title="Close">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-              </svg>
             </button>
           </div>
         </header>
