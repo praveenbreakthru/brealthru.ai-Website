@@ -44,6 +44,13 @@ function BreakthruLabsStory() {
               </div>
             </div>
           </div>
+          <div className="ls-hero-right">
+            <img 
+              src="https://s13.gifyu.com/images/bmPda.gif" 
+              alt="Breakthru Labs Animation" 
+              className="ls-hero-animation-gif"
+            />
+          </div>
         </div>
         <div className="ls-hero-scroll-hint">
           <div className="ls-hero-scroll-line" />
