@@ -1,9 +1,48 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function FintechStory() {
+  const [stats, setStats] = useState({ acquisition: 0, latency: 0, fraud: 0 })
+  const statsRef = useRef(null)
+  const hasAnimated = useRef(false)
+
   useEffect(() => {
     window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true
+          const targets = { acquisition: 2.5, latency: 40, fraud: 0 }
+          const duration = 2000
+          const startTime = performance.now()
+
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime
+            const progress = Math.min(elapsed / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+
+            setStats({
+              acquisition: Math.round(eased * targets.acquisition * 10) / 10,
+              latency: Math.round(eased * targets.latency),
+              fraud: Math.round(eased * targets.fraud),
+            })
+
+            if (progress < 1) {
+              requestAnimationFrame(animate)
+            }
+          }
+
+          requestAnimationFrame(animate)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    if (statsRef.current) observer.observe(statsRef.current)
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -171,10 +210,10 @@ function FintechStory() {
             <span className="fs-section-num">04</span>
             <span className="fs-section-label-text">THE BREAKTHROUGH</span>
           </div>
-          <div className="fs-stats-grid">
+          <div className="fs-stats-grid" ref={statsRef}>
             <div className="fs-stat-card fs-stat-card-1">
               <div className="fs-stat-card-top" />
-              <div className="fs-stat-value">2.5<span className="fs-stat-unit">x</span></div>
+              <div className="fs-stat-value">{stats.acquisition}<span className="fs-stat-unit">x</span></div>
               <div className="fs-stat-label">User Acquisition</div>
               <div className="fs-stat-bar">
                 <div className="fs-stat-bar-fill" style={{ width: '75%' }} />
@@ -182,7 +221,7 @@ function FintechStory() {
             </div>
             <div className="fs-stat-card fs-stat-card-2">
               <div className="fs-stat-card-top" />
-              <div className="fs-stat-value">40<span className="fs-stat-unit">ms</span></div>
+              <div className="fs-stat-value">{stats.latency}<span className="fs-stat-unit">ms</span></div>
               <div className="fs-stat-label">Transaction Latency</div>
               <div className="fs-stat-bar">
                 <div className="fs-stat-bar-fill" style={{ width: '95%' }} />
@@ -190,7 +229,7 @@ function FintechStory() {
             </div>
             <div className="fs-stat-card fs-stat-card-3">
               <div className="fs-stat-card-top" />
-              <div className="fs-stat-value">$0</div>
+              <div className="fs-stat-value">${stats.fraud}</div>
               <div className="fs-stat-label">Fraud Loss (Q4)</div>
               <div className="fs-stat-bar">
                 <div className="fs-stat-bar-fill" style={{ width: '100%' }} />

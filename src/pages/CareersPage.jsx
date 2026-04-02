@@ -6,6 +6,8 @@ function CareersPage() {
   const [careerStats, setCareerStats] = useState({ engineers: 0, hubs: 0, clients: 0, rating: 0 })
   const sectionRefs = useRef({})
   const hasAnimated = useRef(false)
+  const statsRef = useRef(null)
+  const [statsVisible, setStatsVisible] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -35,7 +37,21 @@ function CareersPage() {
   }, [])
 
   useEffect(() => {
-    if (!visibleSections.careers || hasAnimated.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    if (statsRef.current) observer.observe(statsRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!statsVisible || hasAnimated.current) return
 
     hasAnimated.current = true
 
@@ -61,7 +77,7 @@ function CareersPage() {
     }
 
     requestAnimationFrame(animate)
-  }, [visibleSections.careers])
+  }, [statsVisible])
 
   const setSectionRef = (id) => (el) => {
     sectionRefs.current[id] = el
@@ -171,7 +187,7 @@ function CareersPage() {
           </div>
 
           {/* Stats */}
-          <div className="careers-stats">
+          <div className="careers-stats" ref={statsRef}>
             <div className="careers-stat-card">
               <span className="careers-stat-value">{careerStats.engineers}+</span>
               <span className="careers-stat-label">Engineers</span>

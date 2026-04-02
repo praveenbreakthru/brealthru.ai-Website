@@ -110,20 +110,6 @@ function ContactUs() {
     },
     {
       num: '03',
-      label: 'Company',
-      color: '#0984e3',
-      type: 'readonly',
-      value: formData.company,
-    },
-    {
-      num: '04',
-      label: 'Admin',
-      color: '#e84393',
-      type: 'readonly',
-      value: formData.admin,
-    },
-    {
-      num: '05',
       label: 'The Mission',
       color: '#fdcb6e',
       type: 'textarea',
@@ -296,65 +282,7 @@ function ContactUs() {
             </form>
           </div>
 
-          <aside className="contact-sidebar">
-            <div className="contact-side-card contact-side-card-1">
-              <div className="contact-side-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
-              </div>
-              <h3 className="contact-side-title">Direct Channels</h3>
-              <p className="contact-side-desc">
-                Your message is transmitted simultaneously to both channels for maximum visibility.
-              </p>
-              <div className="contact-side-links">
-                <a href="mailto:bd@breakthru.ai" className="contact-side-link">
-                  <span className="contact-side-link-dot" style={{ background: '#6c5ce7' }} />
-                  bd@breakthru.ai
-                </a>
-                <a href="mailto:admin@breakthru.ai" className="contact-side-link">
-                  <span className="contact-side-link-dot" style={{ background: '#00b894' }} />
-                  admin@breakthru.ai
-                </a>
-              </div>
-            </div>
 
-            <div className="contact-side-card contact-side-card-2">
-              <div className="contact-side-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-              </div>
-              <h3 className="contact-side-title">Response SLA</h3>
-              <p className="contact-side-desc">
-                Standard response within 24 hours. Priority matters? Expect a reply within 4 hours on business days.
-              </p>
-              <div className="contact-side-sla">
-                <div className="contact-sla-bar">
-                  <div className="contact-sla-fill" />
-                </div>
-                <div className="contact-sla-labels">
-                  <span>0h</span>
-                  <span>4h</span>
-                  <span>24h</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="contact-side-card contact-side-card-3">
-              <div className="contact-side-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-              </div>
-              <h3 className="contact-side-title">Confidentiality</h3>
-              <p className="contact-side-desc">
-                All communications are encrypted and handled under strict NDA protocols. Your project details are safe with us.
-              </p>
-            </div>
-          </aside>
         </div>
       </section>
     </div>
