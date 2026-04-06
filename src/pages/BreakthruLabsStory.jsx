@@ -1,9 +1,48 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function BreakthruLabsStory() {
+  const [stats, setStats] = useState({ downtime: 0, products: 0, cycle: 0 })
+  const statsRef = useRef(null)
+  const hasAnimated = useRef(false)
+
   useEffect(() => {
     window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true
+          const targets = { downtime: 60, products: 2, cycle: 2 }
+          const duration = 2000
+          const startTime = performance.now()
+
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime
+            const progress = Math.min(elapsed / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+
+            setStats({
+              downtime: Math.round(eased * targets.downtime),
+              products: Math.round(eased * targets.products),
+              cycle: Math.round(eased * targets.cycle),
+            })
+
+            if (progress < 1) {
+              requestAnimationFrame(animate)
+            }
+          }
+
+          requestAnimationFrame(animate)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    if (statsRef.current) observer.observe(statsRef.current)
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -173,10 +212,10 @@ function BreakthruLabsStory() {
             <span className="ls-section-num">04</span>
             <span className="ls-section-label-text">THE IMPACT</span>
           </div>
-          <div className="ls-stats-grid">
+          <div className="ls-stats-grid" ref={statsRef}>
             <div className="ls-stat-card ls-stat-card-1">
               <div className="ls-stat-card-top" />
-              <div className="ls-stat-value">60<span className="ls-stat-unit">%</span></div>
+              <div className="ls-stat-value">{stats.downtime}<span className="ls-stat-unit">%</span></div>
               <div className="ls-stat-label">Downtime Reduction</div>
               <div className="ls-stat-bar">
                 <div className="ls-stat-bar-fill" style={{ width: '60%' }} />
@@ -184,7 +223,7 @@ function BreakthruLabsStory() {
             </div>
             <div className="ls-stat-card ls-stat-card-2">
               <div className="ls-stat-card-top" />
-              <div className="ls-stat-value">2</div>
+              <div className="ls-stat-value">{stats.products}</div>
               <div className="ls-stat-label">Products Shipping</div>
               <div className="ls-stat-bar">
                 <div className="ls-stat-bar-fill" style={{ width: '100%' }} />
@@ -192,7 +231,7 @@ function BreakthruLabsStory() {
             </div>
             <div className="ls-stat-card ls-stat-card-3">
               <div className="ls-stat-card-top" />
-              <div className="ls-stat-value">2<span className="ls-stat-unit">wk</span></div>
+              <div className="ls-stat-value">{stats.cycle}<span className="ls-stat-unit">wk</span></div>
               <div className="ls-stat-label">Spike-to-Ship Cycle</div>
               <div className="ls-stat-bar">
                 <div className="ls-stat-bar-fill" style={{ width: '85%' }} />

@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 
 function TelecomStory() {
   const [visibleSections, setVisibleSections] = useState({})
+  const [resultStats, setResultStats] = useState({ uptime: 0, truckRolls: 0 })
   const sectionRefs = useRef({})
+  const statsRef = useRef(null)
+  const hasStatsAnimated = useRef(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -26,6 +29,40 @@ function TelecomStory() {
       if (el) observer.observe(el)
     })
 
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStatsAnimated.current) {
+          hasStatsAnimated.current = true
+          const targets = { uptime: 99.99, truckRolls: 30 }
+          const duration = 2000
+          const startTime = performance.now()
+
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime
+            const progress = Math.min(elapsed / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+
+            setResultStats({
+              uptime: Math.round(eased * targets.uptime * 100) / 100,
+              truckRolls: Math.round(eased * targets.truckRolls),
+            })
+
+            if (progress < 1) {
+              requestAnimationFrame(animate)
+            }
+          }
+
+          requestAnimationFrame(animate)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    if (statsRef.current) observer.observe(statsRef.current)
     return () => observer.disconnect()
   }, [])
 
@@ -424,7 +461,7 @@ function TelecomStory() {
             <span className="tlc-section-label-text">THE BREAKTHROUGH</span>
           </div>
 
-          <div className="tlc-breakthrough-grid">
+          <div className="tlc-breakthrough-grid" ref={statsRef}>
             <div className="tlc-result-card tlc-result-1">
               <div className="tlc-result-top-bar" />
               <div className="tlc-result-icon-wrap">
@@ -433,7 +470,7 @@ function TelecomStory() {
                 </svg>
               </div>
               <div className="tlc-result-value">
-                99.99<span className="tlc-result-pct">%</span>
+                {resultStats.uptime}<span className="tlc-result-pct">%</span>
               </div>
               <div className="tlc-result-label">Network Uptime</div>
               <div className="tlc-result-bar">
@@ -451,7 +488,7 @@ function TelecomStory() {
                 </svg>
               </div>
               <div className="tlc-result-value">
-                -30<span className="tlc-result-pct">%</span>
+                -{resultStats.truckRolls}<span className="tlc-result-pct">%</span>
               </div>
               <div className="tlc-result-label">Truck Rolls</div>
               <div className="tlc-result-bar">
