@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 
 function ManufacturingStory() {
   const [visible, setVisible] = useState({})
+  const [resultStats, setResultStats] = useState({ efficiency: 0, downtime: 0, traceability: 0 })
   const observerRef = useRef(null)
+  const statsRef = useRef(null)
+  const hasStatsAnimated = useRef(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -26,6 +29,41 @@ function ManufacturingStory() {
     })
 
     return () => observerRef.current?.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStatsAnimated.current) {
+          hasStatsAnimated.current = true
+          const targets = { efficiency: 40, downtime: 0, traceability: 100 }
+          const duration = 2000
+          const startTime = performance.now()
+
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime
+            const progress = Math.min(elapsed / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+
+            setResultStats({
+              efficiency: Math.round(eased * targets.efficiency),
+              downtime: Math.round(eased * targets.downtime),
+              traceability: Math.round(eased * targets.traceability),
+            })
+
+            if (progress < 1) {
+              requestAnimationFrame(animate)
+            }
+          }
+
+          requestAnimationFrame(animate)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    if (statsRef.current) observer.observe(statsRef.current)
+    return () => observer.disconnect()
   }, [])
 
   const av = (key) => visible[key] ? 'mfg-visible' : ''
@@ -336,7 +374,7 @@ function ManufacturingStory() {
             <h2 className="mfg-section-title">The Breakthrough</h2>
             <div className="mfg-section-line" />
           </div>
-          <div className="mfg-breakthrough-grid">
+          <div className="mfg-breakthrough-grid" ref={statsRef}>
             <div className="mfg-result-card mfg-result-1">
               <div className="mfg-result-top-bar" />
               <div className="mfg-result-icon-wrap">
@@ -344,7 +382,7 @@ function ManufacturingStory() {
                   <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
                 </svg>
               </div>
-              <div className="mfg-result-value">40<span className="mfg-result-pct">%</span></div>
+              <div className="mfg-result-value">{resultStats.efficiency}<span className="mfg-result-pct">%</span></div>
               <div className="mfg-result-label">Efficiency Gain</div>
               <div className="mfg-result-bar">
                 <div className="mfg-result-bar-fill" style={{ width: '40%' }} />
@@ -361,7 +399,7 @@ function ManufacturingStory() {
                   <line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
               </div>
-              <div className="mfg-result-value">Zero</div>
+              <div className="mfg-result-value">{resultStats.downtime === 0 ? 'Zero' : resultStats.downtime}</div>
               <div className="mfg-result-label">Unplanned Downtime</div>
               <div className="mfg-result-bar">
                 <div className="mfg-result-bar-fill" style={{ width: '100%' }} />
@@ -377,7 +415,7 @@ function ManufacturingStory() {
                   <polyline points="22 4 12 14.01 9 11.01"/>
                 </svg>
               </div>
-              <div className="mfg-result-value">100<span className="mfg-result-pct">%</span></div>
+              <div className="mfg-result-value">{resultStats.traceability}<span className="mfg-result-pct">%</span></div>
               <div className="mfg-result-label">Traceability</div>
               <div className="mfg-result-bar">
                 <div className="mfg-result-bar-fill" style={{ width: '100%' }} />

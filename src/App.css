@@ -4345,23 +4345,23 @@ img {
 
 /* Purple card */
 .careers-pos-purple {
-  background: linear-gradient(145deg, #f0edff, #e4dffc);
-  border: 2px solid #d0c8f4;
+  background: linear-gradient(145deg, #6c5ce7, #a29bfe);
+  border: 2px solid #6c5ce7;
 }
 
 .careers-pos-purple .careers-pos-type {
-  color: #6c5ce7;
-  background: rgba(108, 92, 231, 0.1);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .careers-pos-purple .careers-pos-dept {
-  color: #6c5ce7;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .careers-pos-purple .careers-pos-tag {
-  background: rgba(108, 92, 231, 0.08);
-  border-color: #d0c8f4;
-  color: #6c5ce7;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 
 .careers-pos-purple::before {
@@ -4376,23 +4376,23 @@ img {
 
 /* Green card */
 .careers-pos-green {
-  background: linear-gradient(145deg, #e8fff3, #d4fce8);
-  border: 2px solid #a8e8c8;
+  background: linear-gradient(145deg, #00b894, #55efc4);
+  border: 2px solid #00b894;
 }
 
 .careers-pos-green .careers-pos-type {
-  color: #00b894;
-  background: rgba(0, 184, 148, 0.1);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .careers-pos-green .careers-pos-dept {
-  color: #00b894;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .careers-pos-green .careers-pos-tag {
-  background: rgba(0, 184, 148, 0.08);
-  border-color: #a8e8c8;
-  color: #009975;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 
 .careers-pos-green::before {
@@ -4407,23 +4407,23 @@ img {
 
 /* Blue card */
 .careers-pos-blue {
-  background: linear-gradient(145deg, #e8f4ff, #d4ecfd);
-  border: 2px solid #a8d0f4;
+  background: linear-gradient(145deg, #0984e3, #74b9ff);
+  border: 2px solid #0984e3;
 }
 
 .careers-pos-blue .careers-pos-type {
-  color: #0984e3;
-  background: rgba(9, 132, 227, 0.1);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .careers-pos-blue .careers-pos-dept {
-  color: #0984e3;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .careers-pos-blue .careers-pos-tag {
-  background: rgba(9, 132, 227, 0.08);
-  border-color: #a8d0f4;
-  color: #0770c2;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 
 .careers-pos-blue::before {
@@ -4438,23 +4438,23 @@ img {
 
 /* Pink card */
 .careers-pos-pink {
-  background: linear-gradient(145deg, #fff0f7, #fde0ef);
-  border: 2px solid #f0b8d8;
+  background: linear-gradient(145deg, #e84393, #fd79a8);
+  border: 2px solid #e84393;
 }
 
 .careers-pos-pink .careers-pos-type {
-  color: #e84393;
-  background: rgba(232, 67, 147, 0.1);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .careers-pos-pink .careers-pos-dept {
-  color: #e84393;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .careers-pos-pink .careers-pos-tag {
-  background: rgba(232, 67, 147, 0.08);
-  border-color: #f0b8d8;
-  color: #c4387d;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 
 .careers-pos-pink::before {
@@ -4469,23 +4469,23 @@ img {
 
 /* Orange card */
 .careers-pos-orange {
-  background: linear-gradient(145deg, #fff4e8, #fde8d0);
-  border: 2px solid #f0d0a0;
+  background: linear-gradient(145deg, #e17055, #fab1a0);
+  border: 2px solid #e17055;
 }
 
 .careers-pos-orange .careers-pos-type {
-  color: #e17055;
-  background: rgba(225, 112, 85, 0.1);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .careers-pos-orange .careers-pos-dept {
-  color: #e17055;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .careers-pos-orange .careers-pos-tag {
-  background: rgba(225, 112, 85, 0.08);
-  border-color: #f0d0a0;
-  color: #c45d45;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 
 .careers-pos-orange::before {
@@ -4500,23 +4500,23 @@ img {
 
 /* Teal card */
 .careers-pos-teal {
-  background: linear-gradient(145deg, #e8faf8, #d0f4f0);
-  border: 2px solid #a0e4dc;
+  background: linear-gradient(145deg, #00cec9, #81ecec);
+  border: 2px solid #00cec9;
 }
 
 .careers-pos-teal .careers-pos-type {
-  color: #00cec9;
-  background: rgba(0, 206, 201, 0.1);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .careers-pos-teal .careers-pos-dept {
-  color: #00cec9;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .careers-pos-teal .careers-pos-tag {
-  background: rgba(0, 206, 201, 0.08);
-  border-color: #a0e4dc;
-  color: #00a8a4;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 
 .careers-pos-teal::before {
@@ -4546,7 +4546,7 @@ img {
 .careers-pos-title {
   font-size: 18px;
   font-weight: 700;
-  color: #0f0f23;
+  color: #fff;
   margin-bottom: 8px;
   line-height: 1.3;
 }
@@ -4561,7 +4561,7 @@ img {
 .careers-pos-location {
   display: block;
   font-size: 13px;
-  color: #7b7b9a;
+  color: rgba(255, 255, 255, 0.75);
   margin-bottom: 16px;
 }
 
@@ -5936,7 +5936,7 @@ img {
    ============================ */
 .manifesto-section {
   padding: 100px 80px;
-  background: #fafafe;
+  background: #0f0f23;
   position: relative;
 }
 
@@ -5974,7 +5974,7 @@ img {
 .manifesto-heading {
   font-size: clamp(32px, 4vw, 48px);
   font-weight: 800;
-  color: #0f0f23;
+  color: #fff;
   line-height: 1.15;
   letter-spacing: -1px;
 }
@@ -6003,23 +6003,23 @@ img {
 }
 
 .manifesto-card-1 {
-  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-  border: 1px solid #93c5fd;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  border: 1px solid #6c5ce7;
 }
 
 .manifesto-card-2 {
-  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-  border: 1px solid #6ee7b7;
+  background: linear-gradient(135deg, #00b894, #55efc4);
+  border: 1px solid #00b894;
 }
 
 .manifesto-card-3 {
-  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-  border: 1px solid #c4b5fd;
+  background: linear-gradient(135deg, #0984e3, #74b9ff);
+  border: 1px solid #0984e3;
 }
 
 .manifesto-card-4 {
-  background: linear-gradient(135deg, #fce7f3, #fbcfe8);
-  border: 1px solid #f9a8d4;
+  background: linear-gradient(135deg, #e84393, #fd79a8);
+  border: 1px solid #e84393;
 }
 
 .manifesto-visible .manifesto-card-1 {
@@ -6072,7 +6072,7 @@ img {
 .manifesto-text {
   font-size: 16px;
   font-weight: 600;
-  color: #0f0f23;
+  color: #fff;
   line-height: 1.5;
 }
 
@@ -6261,7 +6261,7 @@ img {
    ============================ */
 .values-section {
   padding: 100px 80px;
-  background: #fafafe;
+  background: #0f0f23;
 }
 
 .values-inner {
@@ -6295,7 +6295,7 @@ img {
 .values-heading {
   font-size: clamp(32px, 4vw, 48px);
   font-weight: 800;
-  color: #0f0f23;
+  color: #fff;
   line-height: 1.15;
   letter-spacing: -1px;
 }
@@ -6322,23 +6322,23 @@ img {
 }
 
 .values-card-1 {
-  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-  border: 1px solid #c4b5fd;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  border: 1px solid #6c5ce7;
 }
 
 .values-card-2 {
-  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-  border: 1px solid #6ee7b7;
+  background: linear-gradient(135deg, #00b894, #55efc4);
+  border: 1px solid #00b894;
 }
 
 .values-card-3 {
-  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-  border: 1px solid #93c5fd;
+  background: linear-gradient(135deg, #0984e3, #74b9ff);
+  border: 1px solid #0984e3;
 }
 
 .values-card-4 {
-  background: linear-gradient(135deg, #fce7f3, #fbcfe8);
-  border: 1px solid #f9a8d4;
+  background: linear-gradient(135deg, #e84393, #fd79a8);
+  border: 1px solid #e84393;
 }
 
 .values-visible .values-card-1 {
@@ -6391,14 +6391,14 @@ img {
 .values-card-title {
   font-size: 18px;
   font-weight: 700;
-  color: #0f0f23;
+  color: #fff;
   margin-bottom: 12px;
   line-height: 1.3;
 }
 
 .values-card-desc {
   font-size: 14px;
-  color: #3d3d5c;
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.7;
 }
 
@@ -6559,7 +6559,7 @@ img {
    ============================ */
 .pillars-section {
   padding: 100px 80px;
-  background: #fafafe;
+  background: #0f0f23;
 }
 
 .pillars-inner {
@@ -6594,7 +6594,7 @@ img {
 .pillars-heading {
   font-size: clamp(24px, 3vw, 36px);
   font-weight: 800;
-  color: #0f0f23;
+  color: #fff;
   line-height: 1.3;
   letter-spacing: -0.5px;
 }
@@ -6622,23 +6622,23 @@ img {
 }
 
 .pillar-card-1 {
-  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-  border: 1px solid #c4b5fd;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  border: 1px solid #6c5ce7;
 }
 
 .pillar-card-2 {
-  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-  border: 1px solid #6ee7b7;
+  background: linear-gradient(135deg, #00b894, #55efc4);
+  border: 1px solid #00b894;
 }
 
 .pillar-card-3 {
-  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-  border: 1px solid #93c5fd;
+  background: linear-gradient(135deg, #0984e3, #74b9ff);
+  border: 1px solid #0984e3;
 }
 
 .pillar-card-4 {
-  background: linear-gradient(135deg, #fce7f3, #fbcfe8);
-  border: 1px solid #f9a8d4;
+  background: linear-gradient(135deg, #e84393, #fd79a8);
+  border: 1px solid #e84393;
 }
 
 .pillars-visible .pillar-card-1 {
@@ -6684,7 +6684,7 @@ img {
 .pillar-label {
   font-size: 16px;
   font-weight: 700;
-  color: #0f0f23;
+  color: #fff;
   margin-bottom: 12px;
 }
 
@@ -7247,7 +7247,7 @@ img {
    FINTECH STORY PAGE
    ============================ */
 .fintech-story-page {
-  background: #fafafa;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
 }
 
 /* --- Hero --- */
@@ -7467,7 +7467,7 @@ img {
 .fs-section-label-text {
   font-size: 13px;
   font-weight: 700;
-  color: #636e72;
+  color: rgba(255, 255, 255, 0.5);
   letter-spacing: 3px;
   text-transform: uppercase;
 }
@@ -7500,11 +7500,11 @@ img {
 
 .fs-context-card {
   position: relative;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 24px;
   padding: 48px 40px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
-  border: 1px solid #e8e6f0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 
@@ -7519,7 +7519,7 @@ img {
   right: 0;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(9, 132, 227, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(9, 132, 227, 0.12) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -7539,20 +7539,19 @@ img {
 
 .fs-context-text {
   font-size: 18px;
-  color: #4a4a6a;
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.9;
   margin: 0;
 }
 
 .fs-context-text strong {
-  color: #0f0f23;
+  color: #fff;
   font-weight: 700;
 }
 
 /* --- Tech Stack Section --- */
 .fs-techstack {
   padding: 100px 0;
-  background: #fff;
 }
 
 .fs-techstack-inner {
@@ -7563,14 +7562,14 @@ img {
 
 .fs-techstack-intro {
   font-size: 19px;
-  color: #4a4a6a;
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.9;
   max-width: 700px;
   margin-bottom: 48px;
 }
 
 .fs-techstack-intro strong {
-  color: #0f0f23;
+  color: #fff;
   font-weight: 700;
 }
 
@@ -7583,8 +7582,8 @@ img {
 
 .fs-tech-card {
   position: relative;
-  background: #fafafa;
-  border: 1px solid #e8e6f0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 36px 24px;
   text-align: center;
@@ -7647,7 +7646,7 @@ img {
 }
 
 .fs-tech-card-icon {
-  color: #636e72;
+  color: rgba(255, 255, 255, 0.5);
   margin-bottom: 20px;
   transition: color 0.4s ease;
 }
@@ -7656,7 +7655,7 @@ img {
   display: block;
   font-size: 18px;
   font-weight: 800;
-  color: #0f0f23;
+  color: #fff;
   margin-bottom: 6px;
   transition: color 0.4s ease;
 }
@@ -7665,14 +7664,14 @@ img {
   display: block;
   font-size: 13px;
   font-weight: 500;
-  color: #636e72;
+  color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.5px;
   transition: color 0.4s ease;
 }
 
 .fs-techstack-sub {
   font-size: 17px;
-  color: #4a4a6a;
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.8;
   font-style: italic;
 }
@@ -7752,8 +7751,8 @@ img {
 
 .fs-stat-card {
   position: relative;
-  background: #fff;
-  border: 1px solid #e8e6f0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   padding: 44px 36px;
   overflow: hidden;
@@ -7762,7 +7761,7 @@ img {
 
 .fs-stat-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3);
 }
 
 .fs-stat-card-top {
@@ -7788,7 +7787,7 @@ img {
 .fs-stat-value {
   font-size: clamp(48px, 5vw, 72px);
   font-weight: 900;
-  color: #0f0f23;
+  color: #fff;
   line-height: 1;
   margin-bottom: 12px;
   letter-spacing: -2px;
@@ -7798,13 +7797,13 @@ img {
   font-size: 0.45em;
   font-weight: 700;
   vertical-align: super;
-  color: #0984e3;
+  color: #74b9ff;
 }
 
 .fs-stat-label {
   font-size: 15px;
   font-weight: 600;
-  color: #636e72;
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 24px;
   letter-spacing: 0.5px;
 }
@@ -7812,7 +7811,7 @@ img {
 .fs-stat-bar {
   width: 100%;
   height: 6px;
-  background: #f0eef5;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -11554,9 +11553,8 @@ img {
 .contact-body-inner {
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 48px;
+  display: flex;
+  justify-content: center;
   align-items: start;
   opacity: 0;
   transform: translateY(30px);
