@@ -6,7 +6,7 @@ function ContactUs() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    company: 'bd@breakthru.ai',
+    company: 'contact@breakthru.ai',
     admin: 'admin@breakthru.ai',
     mission: '',
   })
@@ -59,32 +59,30 @@ function ContactUs() {
     setStatus('sending')
 
     try {
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        to_company: formData.company,
-        to_admin: formData.admin,
-        message: formData.mission,
-      }
-
       await emailjs.send(
-        'service_breakthru',
-        'template_contact',
-        templateParams,
-        'YOUR_PUBLIC_KEY'
+        'service_554m6ea',
+        'template_vnjeuyd',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          to_email: 'contact@breakthru.ai',
+          message: formData.mission,
+        },
+        '50i6bsqtAkW3WSyRF'
       )
 
       setStatus('success')
       setFormData({
         name: '',
         email: '',
-        company: 'bd@breakthru.ai',
+        company: 'contact@breakthru.ai',
         admin: 'admin@breakthru.ai',
         mission: '',
       })
-    } catch {
+    } catch (error) {
+      console.error('Email send error:', error)
       setStatus('error')
-      setErrorMsg('Transmission failed. Please try again or reach us directly at bd@breakthru.ai')
+      setErrorMsg('Transmission failed. Please try again or reach us directly at contact@breakthru.ai')
     }
   }
 
