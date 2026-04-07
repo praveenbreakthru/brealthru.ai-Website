@@ -33,21 +33,21 @@ html {
 }
 
 .main-layout-wrapper.sidebar-open .main-content-area {
-  width: 80%;
-  flex: 0 0 80%;
+  width: 72%;
+  flex: 0 0 72%;
 }
 
 /* Ensure the header stays within the content area and resizes */
 .main-layout-wrapper.sidebar-open .site-header {
-  width: 80%;
+  width: 72%;
   left: 0;
 }
 
 .sidebar-chatbot-container {
   position: fixed;
   top: 0;
-  right: -20%;
-  width: 20%;
+  right: -28%;
+  width: 28%;
   height: 100vh;
   background: rgba(15, 15, 35, 0.98);
   backdrop-filter: blur(28px);
@@ -109,7 +109,7 @@ html {
 .floating-ai-toggle.active {
   background: #6a44ff;
   color: #fff;
-  right: calc(20% + 30px);
+  right: calc(28% + 30px);
 }
 
 @media (max-width: 1200px) {
@@ -292,7 +292,7 @@ img {
   bottom: 24px;
   right: 24px;
   z-index: 9999;
-  width: 360px;
+  width: 400px;
   max-width: calc(100vw - 48px);
 }
 
@@ -362,7 +362,7 @@ img {
 
 /* Inline variant (hero section) */
 .cb-card-inline {
-  max-width: 420px;
+  max-width: 460px;
   width: 100%;
   height: 400px;
   animation: cb-card-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -590,7 +590,7 @@ img {
 .cb-msg {
   display: flex;
   gap: 10px;
-  max-width: 78%;
+  max-width: 88%;
   animation: cb-msg-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
