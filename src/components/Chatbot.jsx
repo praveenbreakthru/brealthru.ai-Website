@@ -1,33 +1,182 @@
 import { useEffect, useRef, useState } from 'react'
+import { pipeline, env } from '@xenova/transformers'
+
+env.allowLocalModels = false; // Pull models from HuggingFace Hub
+env.useBrowserCache = true;
+
+// Global singletons for ML feature extraction
+let embedderPipeline = null;
+let databaseEmbeddings = null;
+let isModelInitializing = false;
 
 const knowledgeBase = [
-  { q: ['who are you', 'what is breakthru', 'about', 'company', 'what do you do'], a: 'We are breakthru.ai — the Digital Fabric. A hybrid of high-end consulting and deep engineering. We Architect, Build, and Run. No slide decks, just shipped code.' },
-  { q: ['services', 'what services', 'offerings', 'capabilities', 'what you offer'], a: 'Our services include: 1) Strategy — Digital Transformation & ROI Modeling, 2) Data & AI — Lakehouse & GenAI Agents, 3) Engineering — Platform Engineering & DevSecOps, 4) Growth — Team Augmentation & GCC Build, 5) Product Squads — Dedicated teams & Partner Services, 6) Family Office — Wealth platform modernization.' },
-  { q: ['consulting', 'consulting ai', 'what is consulting'], a: 'ConsultingAI helps enterprises align business ambition with technological direction. We work with CXOs and transformation leaders to architect intelligent strategies that are actionable, scalable, and aligned to real-world outcomes.' },
-  { q: ['aingineering', 'engineering', 'what is aingineering'], a: 'AIngineering is our deep engineering practice. We build production-grade AI/ML systems, platform engineering, cloud infrastructure, and high-scale microservices architectures.' },
-  { q: ['xperienceai', 'experience', 'what is xperienceai'], a: 'XperienceAI focuses on transforming customer and user experiences through AI-driven personalization, recommendation engines, and intelligent interfaces.' },
-  { q: ['talentai', 'talent', 'hiring', 'recruitment'], a: 'TalentAI is our AI-powered talent transformation practice. We help organizations build, upskill, and transform their engineering teams with AI capabilities.' },
-  { q: ['gcc', 'global capability', 'captive', 'capability center'], a: 'Our GCC practice helps enterprises set up and scale Global Capability Centers. We offer white-labeled engineering pods that extend your capability overnight.' },
-  { q: ['industries', 'sectors', 'domains', 'verticals'], a: 'We transform 6 industries: 1) BFSI — Banking & Financial Services, 2) Manufacturing & Industry 4.0, 3) Telecommunication, 4) Retail & E-Commerce, 5) Healthcare & Life Sciences, 6) Travel & Hospitality.' },
-  { q: ['fintech', 'banking', 'financial', 'finance'], a: 'In Fintech, we built a parallel core using Event-Driven Architecture for real-time ledgers. Results: 2.5x user acquisition, 40ms transaction latency, $0 fraud loss in Q4.' },
-  { q: ['manufacturing', 'factory', 'industry 4.0', 'smart factory'], a: 'In Manufacturing, we deliver Digital Twin implementation, Predictive Maintenance AI, Smart Factory Automation, and Supply Chain Optimization. Results: 40% efficiency gain, Zero unplanned downtime, 100% traceability.' },
-  { q: ['telecom', 'telecommunication', 'network', 'tower'], a: 'In Telecom, we built TRAMS (Total Remote Asset Management System) — an AI brain that predicts tower failures 48 hours in advance. We managed 40,000 assets virtually. Results: 99.99% network uptime, -30% truck rolls, real-time visibility.' },
-  { q: ['retail', 'ecommerce', 'e-commerce', 'commerce'], a: 'In Retail & E-Commerce, we build unified commerce platforms, personalization engines, and inventory optimization. Results: 2.5x conversion rate, 45% reduced cart abandonment, real-time inventory sync.' },
-  { q: ['healthcare', 'health', 'medical', 'hospital', 'hipaa'], a: 'In Healthcare, we deliver EHR integration, clinical decision support, telemedicine platforms, and regulatory compliance. Results: 3X patient throughput, 50% reduced wait times, 100% HIPAA compliant.' },
-  { q: ['travel', 'hospitality', 'hotel', 'booking'], a: 'In Travel & Hospitality, we build booking engines, revenue management, loyalty programs, and guest experience platforms. Results: 25% revenue uplift, 4.8★ guest satisfaction, millions of bookings/day.' },
-  { q: ['ecosystem', 'partners', 'partnership', 'alliance'], a: 'Our Strategic Alliances include: Databricks (Data & AI), Snowflake (Data Cloud), Google Cloud (AI Infrastructure), and Intellect Design (Digital Banking). We have 200+ certified engineers and 50+ joint customers.' },
-  { q: ['databricks'], a: 'Databricks is our Data & AI Platform partner. We deliver Lakehouse Architecture, Delta Lake Implementation, MLflow & ML Ops, and Spark Optimization.' },
-  { q: ['snowflake'], a: 'Snowflake is our Data Cloud partner. We deliver Data Warehouse Modernization, Data Mesh Implementation, Snowpark Development, and Data Sharing & Marketplace.' },
-  { q: ['google cloud', 'gcp'], a: 'Google Cloud is our AI Infrastructure partner. We deliver Vertex AI & GenAI, BigQuery Analytics, Cloud Infrastructure, and Anthos Multi-cloud.' },
-  { q: ['labs', 'breakthru labs', 'nexus', 'agent lenz'], a: 'Breakthru Labs is our Experimental Division. Two products: 1) Nexus BD — AI-powered Business Development automation with dual AI research (Gemini + Deepseek). 2) Agent Lenz — AIOps incident management that reduces downtime by 60%.' },
-  { q: ['nexus', 'nexus bd'], a: 'Nexus BD is our Autonomous Growth Engine — an AI-powered Business Development platform with Dual AI Research Engine, Auto-Personalized Landing Pages, Sentiment Analysis on Replies, and Workflow Automation. Currently in Beta Access.' },
-  { q: ['agent lenz', 'lenz', 'aiops'], a: 'Agent Lenz is our AIOps Sentinel — comprehensive AI-powered incident management and SRE platform. Features: Intelligent Alert Correlation, Real-time SLA Compliance, Automated War Rooms, and Predictive Breach Detection. Live V1.0.' },
-  { q: ['how we deliver', 'process', 'methodology', 'approach'], a: 'How We Deliver: 1) Discover — Deep-dive into your domain, tech stack, and pain points. 2) Architect — Design systems that scale, not slide decks that gather dust. 3) Build — Agile squads shipping production code in 2-week sprints. 4) Run — We own the uptime with 24/7 SRE and outcome-based SLAs.' },
-  { q: ['team', 'people', 'engineers', 'staff'], a: 'We have 200+ certified engineers across all partner platforms, 50+ joint enterprise customers, with an average 12-week implementation time and 4.9/5 customer satisfaction score.' },
-  { q: ['contact', 'reach', 'email', 'talk', 'call'], a: 'Click the "Talk to us!" button in the navigation bar to get in touch with our team. We\'d love to discuss how we can help transform your business.' },
-  { q: ['our story', 'history', 'founded', 'background'], a: 'Visit the "Our Story" page from the "Who We Are" dropdown in the navigation to learn about our journey, leadership team, and the network of partners and clients we\'ve built.' },
-]
 
+  // ===== ABOUT =====
+  {
+    q: ['who are you', 'what is breakthru', 'about company'],
+    a: 'We are breakthru.ai — the Digital Fabric. A hybrid of high-end consulting and deep engineering. We architect, build, and run enterprise systems. No slide decks, just shipped code.'
+  },
+
+  {
+    q: ['vision', 'mission', 'why breakthru'],
+    a: 'Our mission is to bridge the gap between strategy and execution by combining consulting-grade thinking with engineering-grade delivery. We own outcomes, not just outputs.'
+  },
+
+  {
+    q: ['values', 'principles', 'manifesto'],
+    a: 'Our principles: Code > Slides, Extreme Ownership, Engineer-to-Engineer collaboration, and Radical Transparency. Every engagement results in production-ready systems.'
+  },
+
+  // ===== SERVICES =====
+  {
+    q: ['services', 'offerings', 'what do you offer'],
+    a: 'We offer 6 core capabilities: 1) Strategy & ROI Engineering, 2) Data & AI (Lakehouse + GenAI), 3) Platform Engineering (Cloud-native systems), 4) Growth (GCC & squads), 5) Product Squads, and 6) Family Office Transformation.'
+  },
+
+  {
+    q: ['strategy', 'consulting'],
+    a: 'We deliver actionable digital roadmaps, ROI models, and architecture blueprints. No 100-page decks — only executable strategies aligned to business outcomes.'
+  },
+
+  {
+    q: ['data ai', 'ai services', 'machine learning'],
+    a: 'We build modern data platforms, lakehouses, and GenAI systems including LLMs, RAG pipelines, predictive analytics, and data governance frameworks.'
+  },
+
+  {
+    q: ['engineering', 'platform', 'devops'],
+    a: 'We build scalable cloud-native systems using microservices, Kubernetes, serverless, and DevSecOps. We modernize legacy systems without disrupting business.'
+  },
+
+  {
+    q: ['growth', 'gcc', 'team'],
+    a: 'We provide white-labeled engineering squads and build Global Capability Centers (GCCs) with full setup — talent, infra, legal, and operations.'
+  },
+
+  {
+    q: ['family office', 'wealth'],
+    a: 'We modernize family offices with unified wealth platforms, portfolio dashboards, secure data vaults, and multi-entity consolidation systems.'
+  },
+
+  // ===== INDUSTRIES =====
+  {
+    q: ['industries', 'domains'],
+    a: 'We specialize in BFSI, Manufacturing, Telecom, Retail, Healthcare, Travel & Hospitality, and Family Office transformation.'
+  },
+
+  {
+    q: ['banking', 'fintech'],
+    a: 'We build digital banking platforms with real-time ledgers, payment orchestration, KYC/AML automation, and fraud detection. Results include 40ms latency, 99.99% uptime, and 2.5x user growth.'
+  },
+
+  {
+    q: ['manufacturing', 'factory'],
+    a: 'We deliver Digital Twins, IoT-enabled smart factories, predictive maintenance AI, and computer vision quality systems. Results: 40% efficiency gain and zero downtime.'
+  },
+
+  {
+    q: ['telecom'],
+    a: 'We built TRAMS — an AI-powered network brain predicting failures 48 hours early. Results: 99.99% uptime, 30% fewer truck rolls, and real-time asset visibility.'
+  },
+
+  {
+    q: ['retail', 'ecommerce'],
+    a: 'We build unified commerce platforms, personalization engines, and real-time inventory systems. Results: 2.5x conversions and 45% reduced cart abandonment.'
+  },
+
+  {
+    q: ['healthcare'],
+    a: 'We build interoperable healthcare systems, AI diagnostics, and telemedicine platforms. Results: 3x patient throughput and 50% reduced wait times.'
+  },
+
+  {
+    q: ['travel', 'hospitality'],
+    a: 'We build booking engines, revenue optimization platforms, and loyalty systems delivering 25% revenue uplift and high customer satisfaction.'
+  },
+
+  // ===== STORIES / CASE STUDIES =====
+  {
+    q: ['case study', 'projects', 'stories'],
+    a: 'We have delivered flagship transformations across banking (neo-bank platforms), manufacturing (smart factories), and telecom (self-healing networks with AI).'
+  },
+
+  {
+    q: ['neo bank', 'bank project'],
+    a: 'We built a cloud-native neo-bank platform with real-time ledgers, multi-currency support, and compliance automation. Achieved 60% faster onboarding and 40% cost reduction.'
+  },
+
+  {
+    q: ['smart factory'],
+    a: 'We implemented IoT sensors, Digital Twins, and Edge AI to create self-optimizing factories with zero unplanned downtime and full traceability.'
+  },
+
+  {
+    q: ['trams'],
+    a: 'TRAMS is our AI-powered telecom platform that predicts failures, manages 40,000+ assets, and enables self-healing networks.'
+  },
+
+  // ===== ECOSYSTEM =====
+  {
+    q: ['partners', 'ecosystem'],
+    a: 'We partner with Databricks, Snowflake, Google Cloud, and Intellect Design to deliver enterprise-grade AI, data, and cloud solutions.'
+  },
+
+  {
+    q: ['databricks'],
+    a: 'We implement Lakehouse architecture, Delta Lake, MLflow, and large-scale data engineering on Databricks.'
+  },
+
+  {
+    q: ['snowflake'],
+    a: 'We modernize data warehouses, implement data mesh, and build scalable analytics platforms on Snowflake.'
+  },
+
+  {
+    q: ['google cloud'],
+    a: 'We build AI and cloud solutions using Vertex AI, BigQuery, and scalable GCP infrastructure.'
+  },
+
+  // ===== LABS =====
+  {
+    q: ['labs', 'breakthru labs'],
+    a: 'Breakthru Labs is our experimental AI division building next-gen products and platforms at the edge of innovation.'
+  },
+
+  {
+    q: ['nexus', 'nexus bd'],
+    a: 'Nexus BD is an AI-powered business development engine with dual AI research, personalized outreach, and automated workflows.'
+  },
+
+  {
+    q: ['agent lenz'],
+    a: 'Agent Lenz is an AIOps platform for incident management with alert correlation, SLA monitoring, and predictive failure detection.'
+  },
+
+  // ===== DELIVERY =====
+  {
+    q: ['process', 'how you work'],
+    a: 'Our model: Discover → Architect → Build → Run. We design, ship, and operate systems with full ownership and 24/7 SRE.'
+  },
+
+  // ===== TEAM =====
+  {
+    q: ['team', 'engineers'],
+    a: 'We are 200+ engineers across global hubs with 50+ enterprise clients, delivering solutions in ~12 weeks with 4.9/5 satisfaction.'
+  },
+
+  // ===== CAREERS =====
+  {
+    q: ['jobs', 'careers'],
+    a: 'We are hiring across Data Engineering, Platform Engineering, GenAI, Full Stack, and DevOps roles. Work on real systems, not presentations.'
+  },
+
+  // ===== CONTACT =====
+  {
+    q: ['contact', 'email', 'phone'],
+    a: 'Reach us via the “Let’s Build” section on the website or email hello@breakthru.ai to start your transformation journey.'
+  }
+
+];
 function BotAvatar({ size = 'md' }) {
   const sizeClass = size === 'sm' ? 'cb-avatar-sm' : 'cb-avatar-md'
   return (
@@ -58,10 +207,42 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
+  
+  // Model state tracker
+  const [modelReady, setModelReady] = useState(!!embedderPipeline);
+  
   const messagesEndRef = useRef(null)
   const messagesContainerRef = useRef(null)
   const isMutedRef = useRef(false)
   const hasSpokenIntroRef = useRef(false)
+
+  // Initialize the ML Engine on component mount
+  useEffect(() => {
+    const initModel = async () => {
+      if (embedderPipeline || isModelInitializing) return;
+      isModelInitializing = true;
+      try {
+        console.log("Loading ML Semantic Model...");
+        embedderPipeline = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+        console.log("Model loaded locally, generating Knowledge Base vectors...");
+        
+        databaseEmbeddings = [];
+        for (const item of knowledgeBase) {
+          for (const q of item.q) {
+            const output = await embedderPipeline(q, { pooling: 'mean', normalize: true });
+            databaseEmbeddings.push({ embedding: Array.from(output.data), a: item.a, sourceQ: q });
+          }
+        }
+        console.log("Knowledge Base vector generation complete.");
+        setModelReady(true);
+      } catch (error) {
+        console.error("Failed to load embedded ML model:", error);
+      } finally {
+        isModelInitializing = false;
+      }
+    };
+    initModel();
+  }, []);
 
   useEffect(() => {
     isMutedRef.current = isMuted
@@ -115,50 +296,115 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
     }
   }, [])
 
-  const findAnswer = (question) => {
-    const lower = question.toLowerCase().trim()
-    if (!lower || lower.length < 2) return 'Please ask a question about our services, industries, products, or partners.'
-
-    let bestMatch = null
-    let bestScore = 0
-
-    for (const item of knowledgeBase) {
-      for (const keyword of item.q) {
-        const words = keyword.toLowerCase().split(' ')
-        let score = 0
-        for (const w of words) {
-          if (lower.includes(w)) score += w.length
+  const getAIResponse = async (text) => {
+    // ----------------------------------------------------
+    // 1. SEMANTIC SEARCH (PRIMARY ML ROUTE)
+    // ----------------------------------------------------
+    if (embedderPipeline && databaseEmbeddings && databaseEmbeddings.length > 0) {
+      try {
+        const output = await embedderPipeline(text, { pooling: 'mean', normalize: true });
+        const queryVec = Array.from(output.data);
+        
+        let matches = [];
+        for (const entry of databaseEmbeddings) {
+          let dotProduct = 0;
+          for (let i = 0; i < queryVec.length; i++) {
+            dotProduct += queryVec[i] * entry.embedding[i];
+          }
+          matches.push({ score: dotProduct, a: entry.a });
         }
-        if (score > bestScore) {
-          bestScore = score
-          bestMatch = item
+        
+        matches.sort((a, b) => b.score - a.score);
+        
+        // Deduplicate answers since distinct 'q' questions can point to the same 'a'
+        const uniqueMatches = [];
+        for (const m of matches) {
+          if (!uniqueMatches.find(u => u.a === m.a)) uniqueMatches.push(m);
         }
+        
+        const bestScore = uniqueMatches[0].score;
+        if (bestScore > 0.45) { 
+          // Similar to keyword mixed logic: only bundle highly overlapping semantic distances
+          const validMatches = uniqueMatches.filter(m => m.score >= bestScore * 0.85).slice(0, 3);
+          if (validMatches.length === 1) {
+            return validMatches[0].a;
+          } else {
+            return validMatches.map(m => `• ${m.a}`).join('\n\n');
+          }
+        }
+        
+        return "I'm sorry, my ML algorithms don't indicate that I have that information. Can you try rephrasing your question about Breakthru.ai?";
+      } catch (error) {
+        console.error("Semantic ML search failed, executing fallback...", error);
       }
     }
 
-    if (bestScore >= 3 && bestMatch) return bestMatch.a
+    // ----------------------------------------------------
+    // 2. STRING MATCHING (FALLBACK IF ML MODULE DID NOT LOAD)
+    // ----------------------------------------------------
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const query = text.toLowerCase();
+        const queryWords = query.split(/[^\w]+/);
+        let matches = [];
+        const stopWords = ['what', 'when', 'where', 'which', 'who', 'how', 'why', 'this', 'that', 'with', 'about', 'from', 'have', 'does', 'tell', 'company', 'breakthru', 'your', 'need', 'know', 'some', 'they', 'them', 'then', 'than'];
+        
+        for (const item of knowledgeBase) {
+          let score = 0;
+          for (const q of item.q) {
+            const keyword = q.toLowerCase();
+            
+            // Reward exact full sentences uniquely
+            if (keyword === query) {
+               score += 50;
+            } else if (keyword.includes(query) || query.includes(keyword)) {
+               score += 15;
+            }
+            
+            // Reward individual meaningful word overlaps heavily
+            const keywordWords = keyword.split(/[^\w]+/);
+            for (const word of queryWords) {
+              if (word.length > 3 && !stopWords.includes(word) && keywordWords.includes(word)) { 
+                score += word.length * 2; 
+              }
+            }
+          }
+          if (score > 5) {
+            matches.push({ score, text: item.a });
+          }
+        }
+        
+        if (matches.length > 0) {
+          matches.sort((a, b) => b.score - a.score);
+          const bestScore = matches[0].score;
+          const validMatches = matches.filter(m => m.score >= bestScore * 0.85).slice(0, 3);
+          
+          if (validMatches.length === 1) {
+            resolve(validMatches[0].text);
+          } else {
+            const combinedAnswers = validMatches.map(m => `• ${m.text}`).join('\n\n');
+            resolve(combinedAnswers);
+          }
+        } else {
+          resolve("I'm sorry, I primarily help with Breakthru.ai services and information. Could you rephrase your question?");
+        }
+      }, 300);
+    });
+  };
 
-    const siteWords = ['breakthru', 'service', 'industry', 'partner', 'labs', 'consult', 'engineer', 'fintech', 'manufactur', 'telecom', 'retail', 'health', 'travel', 'databricks', 'snowflake', 'google', 'intellect', 'nexus', 'lenz', 'gcc', 'talent', 'xperience', 'aingineer', 'build', 'architect', 'run', 'strategy', 'data', 'ai', 'cloud', 'platform']
-    const hasSiteWord = siteWords.some(w => lower.includes(w))
-    if (!hasSiteWord) {
-      return 'I can only answer questions about breakthru.ai — our services, industries, products, ecosystem partners, and how we work. Try asking about our Telecom story, Data & AI services, or Breakthru Labs!'
-    }
+  const handleSend = async () => {
+    const text = input.trim();
+    if (!text) return;
 
-    return 'I\'m not sure about that specific topic. Try asking about our services, industries (BFSI, Manufacturing, Telecom, Retail, Healthcare, Travel), ecosystem partners, or Breakthru Labs products.'
-  }
+    setMessages(prev => [...prev, { role: 'user', text }]);
+    setInput('');
+    setIsTyping(true);
 
-  const handleSend = () => {
-    const text = input.trim()
-    if (!text) return
-    setMessages(prev => [...prev, { role: 'user', text }])
-    setInput('')
-    setIsTyping(true)
-    setTimeout(() => {
-      const answer = findAnswer(text)
-      setMessages(prev => [...prev, { role: 'bot', text: answer }])
-      setIsTyping(false)
-    }, 600)
-  }
+    const answer = await getAIResponse(text);
+
+    setMessages(prev => [...prev, { role: 'bot', text: answer }]);
+    setIsTyping(false);
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
