@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import ScrambleText from '../components/ScrambleText'
 
 const knowledgeBase = [
   {
@@ -562,7 +563,7 @@ function Home({ chatbotOpen, onCloseChatbot }) {
             <span className="hero-line hero-line-dark">RUN.</span>
           </h1>
           <div className="hero-tagline-box">
-            <p>We build intelligent systems that don&apos;t just support — they execute.</p>
+            <p><ScrambleText text="We build intelligent systems that don't just support — they execute." delay={100} speed={30} /></p>
           </div>
         </div>
 
