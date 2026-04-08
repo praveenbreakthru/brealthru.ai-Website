@@ -3505,6 +3505,70 @@ img {
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
 }
 
+.eco-card-1:hover {
+  border: 2px solid #ff6b9d;
+  animation: eco-card-blink-1 1.5s ease-in-out infinite;
+}
+
+.eco-card-2:hover {
+  border: 2px solid #5dade2;
+  animation: eco-card-blink-2 1.5s ease-in-out infinite;
+}
+
+.eco-card-3:hover {
+  border: 2px solid #3498db;
+  animation: eco-card-blink-3 1.5s ease-in-out infinite;
+}
+
+.eco-card-4:hover {
+  border: 2px solid #a29bfe;
+  animation: eco-card-blink-4 1.5s ease-in-out infinite;
+}
+
+@keyframes eco-card-blink-1 {
+  0%, 100% {
+    border-color: #ff6b9d;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 107, 157, 0.4);
+  }
+  50% {
+    border-color: #ff8fb3;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(255, 107, 157, 0.7);
+  }
+}
+
+@keyframes eco-card-blink-2 {
+  0%, 100% {
+    border-color: #5dade2;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 20px rgba(93, 173, 226, 0.4);
+  }
+  50% {
+    border-color: #85c1e9;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(93, 173, 226, 0.7);
+  }
+}
+
+@keyframes eco-card-blink-3 {
+  0%, 100% {
+    border-color: #3498db;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 20px rgba(52, 152, 219, 0.4);
+  }
+  50% {
+    border-color: #5dade2;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(52, 152, 219, 0.7);
+  }
+}
+
+@keyframes eco-card-blink-4 {
+  0%, 100% {
+    border-color: #a29bfe;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 20px rgba(162, 155, 254, 0.4);
+  }
+  50% {
+    border-color: #c8c0ff;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(162, 155, 254, 0.7);
+  }
+}
+
 /* Accent bar */
 .eco-card-accent {
   position: absolute;
@@ -16073,15 +16137,16 @@ img {
 }
 
 .ind-quicknav-btn-active {
-  background: #fff;
-  color: #0a0a1a;
-  border-color: #fff;
+  background: transparent;
+  color: #fff;
+  border-color: var(--ind-glow, #fff);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .ind-quicknav-btn-active:hover {
-  background: #fff;
-  color: #0a0a1a;
-  border-color: #fff;
+  background: transparent;
+  color: #fff;
+  border-color: var(--ind-glow, #fff);
 }
 
 /* ============================
@@ -16163,8 +16228,20 @@ img {
   z-index: 10 !important;
   opacity: 1 !important;
   pointer-events: auto;
-  border-color: rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border-color: var(--ind-glow, #fff) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px var(--ind-glow, rgba(255, 255, 255, 0.3));
+  animation: card-border-blink 2s ease-in-out infinite;
+}
+
+@keyframes card-border-blink {
+  0%, 100% {
+    border-color: var(--ind-glow, #fff);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px var(--ind-glow, rgba(255, 255, 255, 0.3));
+  }
+  50% {
+    border-color: var(--ind-glow, #fff);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 60px var(--ind-glow, rgba(255, 255, 255, 0.5));
+  }
 }
 
 /* Navigation Arrows */
