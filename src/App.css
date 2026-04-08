@@ -2428,7 +2428,7 @@ img {
 }
 
 .ind-section {
-  padding: 120px 0;
+  padding: 80px 0 0;
   background: #0f0f23;
   position: relative;
   overflow: hidden;
@@ -2474,7 +2474,7 @@ img {
 
 .ind-header {
   text-align: center;
-  margin-bottom: 72px;
+  margin-bottom: 40px;
 }
 
 .ind-header-sub {
@@ -3372,7 +3372,7 @@ img {
    ECOSYSTEM SECTION (HOME)
    ============================ */
 .eco-section {
-  padding: 120px 0;
+  padding: 20px 0 80px;
   background: #0f0f23;
   position: relative;
   overflow: hidden;
@@ -3409,7 +3409,7 @@ img {
 /* Header */
 .eco-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 .eco-header-sub {
@@ -16046,7 +16046,7 @@ img {
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
-  padding: 32px 20px 0;
+  padding: 16px 20px 0;
 }
 
 .ind-quicknav-btn {
@@ -16092,7 +16092,7 @@ img {
   position: relative;
   width: 100%;
   perspective: 1500px;
-  padding: 160px 0 80px;
+  padding: 80px 0 60px;
 }
 
 .ind-carousel-track {
@@ -16331,29 +16331,223 @@ img {
 
 /* --- Site Footer --- */
 /* --- Site Footer --- */
+/* ============================
+   PREMIUM SITE FOOTER
+   ============================ */
 .site-footer {
-  height: 5px;
-  padding: 10px 0;
+  background: #0a0a1a;
+  padding: 80px 0 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.2), transparent);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.footer-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.footer-logo-img {
+  width: 32px;
+  height: 32px;
+}
+
+.footer-logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.footer-tagline {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.footer-social-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.04);
-  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.footer-social-link:hover {
+  background: #6a44ff;
+  border-color: #6a44ff;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(106, 68, 255, 0.3);
+}
+
+.footer-col-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6a44ff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .footer-link {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(15, 15, 35, 0.55);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
   transition: all 0.3s ease;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  line-height: 1;
+  display: inline-block;
+  width: fit-content;
 }
 
 .footer-link:hover {
-  color: #6c5ce7;
-  letter-spacing: 3px;
+  color: #fff;
+  transform: translateX(5px);
 }
+
+.footer-contact-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.footer-contact-icon {
+  color: #6a44ff;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.footer-contact-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+}
+
+.footer-contact-link {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.footer-contact-link:hover {
+  opacity: 0.8;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-copyright {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-legal {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-legal-link {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-legal-link:hover {
+  color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 60px 0 30px;
+  }
+  
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .footer-inner {
+    gap: 40px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  
+  .footer-legal {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
