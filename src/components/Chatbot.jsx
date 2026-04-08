@@ -199,8 +199,94 @@ function TypingIndicator() {
   )
 }
 
+function calculateSimilarity(str1, str2) {
+  const words1 = str1.toLowerCase().split(' ')
+  const words2 = str2.toLowerCase().split(' ')
+  let matchCount = 0
+  for (const w1 of words1) {
+    for (const w2 of words2) {
+      if (w2.includes(w1) || w1.includes(w2)) {
+        matchCount++
+        break
+      }
+    }
+  }
+  return matchCount / Math.max(words1.length, words2.length)
+}
+
+function findBestMatch(question) {
+  const lower = question.toLowerCase().trim()
+  if (!lower || lower.length < 2) return null
+
+  let bestMatch = null
+  let bestScore = 0
+
+  for (const item of knowledgeBase) {
+    for (const keyword of item.keywords) {
+      const lowerKeywords = keyword.toLowerCase()
+      const lowerQuestion = lower
+      
+      // Exact match - highest priority
+      if (lowerQuestion === lowerKeywords && lowerKeywords.length > 0) {
+        const score = 1.0
+        if (score > bestScore) {
+          bestScore = score
+          bestMatch = item
+        }
+        continue
+      }
+      
+      // Keyword is subset of question - high priority
+      if (lowerQuestion.includes(lowerKeywords) && lowerKeywords.length > 3) {
+        const score = 0.95
+        if (score > bestScore) {
+          bestScore = score
+          bestMatch = item
+        }
+        continue
+      }
+      
+      // Question contains keyword words - medium priority
+      const questionWords = lowerQuestion.split(/[\s,\-\?\.!]+/).filter(w => w.length > 2)
+      const keywordWords = lowerKeywords.split(/[\s,\-\?\.!]+/).filter(w => w.length > 2)
+      
+      if (keywordWords.length > 0) {
+        let matchCount = 0
+        for (const qw of questionWords) {
+          for (const kw of keywordWords) {
+            if (qw.includes(kw) || kw.includes(qw)) {
+              matchCount++
+              break
+            }
+          }
+        }
+        
+        if (matchCount > 0) {
+          // Require at least 50% word match for relevance
+          const wordMatchRatio = matchCount / keywordWords.length
+          if (wordMatchRatio >= 0.5) {
+            const score = wordMatchRatio * 0.85
+            if (score > bestScore) {
+              bestScore = score
+              bestMatch = item
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Only return match if score is high enough
+  return bestScore >= 0.5 ? bestMatch : null
+}
+
+function isRelevantQuestion(question) {
+  const lower = question.toLowerCase()
+  return relevantKeywords.some(keyword => lower.includes(keyword.toLowerCase()))
+}
+
 export default function Chatbot({ onClose, variant = 'floating' }) {
-  const defaultIntro = 'Hi! I\'m the breakthru.ai assistant. We are the Digital Fabric—a hybrid of high-end consulting and deep engineering. We Architect, Build, and Run. Ask me anything about our services or industries!'
+  const defaultIntro = 'Hi! Im the breakthru.ai assistant. We are the Digital Fabric—a hybrid of high-end consulting and deep engineering. We Architect, Build, and Run. Ask me anything about our services, industries, products, or how we can help transform your business!'
   const [messages, setMessages] = useState([
     { role: 'bot', text: defaultIntro }
   ])
@@ -276,7 +362,6 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
   }, [messages])
 
   useEffect(() => {
-    // To handle browser autoplay policies, we attempt to speak on the first user interaction
     const handleFirstInteraction = () => {
       if (!hasSpokenIntroRef.current && messages.length === 1) {
         speak(defaultIntro)
@@ -414,7 +499,7 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
   }
 
   const handleNewChat = () => {
-    setMessages([{ role: 'bot', text: 'Hi! I\'m the breakthru.ai assistant. We are the Digital Fabric—a hybrid of high-end consulting and deep engineering. We Architect, Build, and Run. Ask me anything about our services or industries!' }])
+    setMessages([{ role: 'bot', text: 'Hi! Im the breakthru.ai assistant. We are the Digital Fabric—a hybrid of high-end consulting and deep engineering. We Architect, Build, and Run. Ask me anything about our services or industries!' }])
     setInput('')
     setIsTyping(false)
   }
@@ -428,7 +513,6 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
       {!isSidebar && <div className="cb-glow" />}
 
       <div className={`cb-card ${isSidebar ? 'cb-card-sidebar' : ''}`}>
-        {/* ── Header ── */}
         <header className="cb-header">
           <div className="cb-header-left">
             <BotAvatar size="md" />
@@ -464,7 +548,6 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
           </div>
         </header>
 
-        {/* ── Tabs ── */}
         <div className="cb-tabs">
           <button
             className={`cb-tab ${activeTab === 'default' ? 'active' : ''}`}
@@ -482,7 +565,6 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
 
         {activeTab === 'default' ? (
           <>
-            {/* ── Messages ── */}
             <div className="cb-messages" ref={messagesContainerRef}>
               {messages.map((msg, i) => (
                 <div key={i} className={`cb-msg cb-msg-${msg.role}`} style={{ animationDelay: `${i * 0.04}s` }}>
@@ -496,7 +578,6 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* ── Input ── */}
             <div className="cb-input-area">
               <div className="cb-input-wrap">
                 <input
@@ -518,7 +599,6 @@ export default function Chatbot({ onClose, variant = 'floating' }) {
             </div>
           </>
         ) : (
-          /* ── Experience Placeholder ── */
           <div className="cb-experience-placeholder">
             <div className="cb-exp-icon">🚀</div>
             <h3 className="cb-exp-title">Experience Bot is under development</h3>

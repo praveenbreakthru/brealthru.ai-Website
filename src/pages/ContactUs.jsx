@@ -6,7 +6,7 @@ function ContactUs() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    company: 'bd@breakthru.ai',
+    company: 'contact@breakthru.ai',
     admin: 'admin@breakthru.ai',
     mission: '',
   })
@@ -59,32 +59,30 @@ function ContactUs() {
     setStatus('sending')
 
     try {
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        to_company: formData.company,
-        to_admin: formData.admin,
-        message: formData.mission,
-      }
-
       await emailjs.send(
-        'service_breakthru',
-        'template_contact',
-        templateParams,
-        'YOUR_PUBLIC_KEY'
+        'service_554m6ea',
+        'template_vnjeuyd',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          to_email: 'contact@breakthru.ai',
+          message: formData.mission,
+        },
+        '50i6bsqtAkW3WSyRF'
       )
 
       setStatus('success')
       setFormData({
         name: '',
         email: '',
-        company: 'bd@breakthru.ai',
+        company: 'contact@breakthru.ai',
         admin: 'admin@breakthru.ai',
         mission: '',
       })
-    } catch {
+    } catch (error) {
+      console.error('Email send error:', error)
       setStatus('error')
-      setErrorMsg('Transmission failed. Please try again or reach us directly at bd@breakthru.ai')
+      setErrorMsg('Transmission failed. Please try again or reach us directly at contact@breakthru.ai')
     }
   }
 
@@ -110,20 +108,15 @@ function ContactUs() {
     },
     {
       num: '03',
-      label: 'Company',
-      color: '#0984e3',
-      type: 'readonly',
-      value: formData.company,
+      label: 'Schedule Meeting',
+      color: '#a29bfe',
+      type: 'buttons',
+      buttons: [
+        { label: 'Quick Schedule Meeting', link: 'https://outlook.office.com/book/BreakthrusPurpleFabric@breakthru.ai/' },
+      ]
     },
     {
       num: '04',
-      label: 'Admin',
-      color: '#e84393',
-      type: 'readonly',
-      value: formData.admin,
-    },
-    {
-      num: '05',
       label: 'The Mission',
       color: '#fdcb6e',
       type: 'textarea',
@@ -235,6 +228,26 @@ function ContactUs() {
                         <span>{field.value}</span>
                       </div>
                     )}
+                    {field.type === 'buttons' && (
+                      <div className="contact-field-buttons">
+                        {field.buttons.map((btn, idx) => (
+                          <a
+                            key={idx}
+                            href={btn.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="contact-schedule-btn"
+                          >
+                            <span>{btn.label}</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                              <polyline points="15 3 21 3 21 9" />
+                              <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                          </a>
+                        ))}
+                      </div>
+                    )}
                     {field.type === 'textarea' && (
                       <textarea
                         name={field.name}
@@ -296,65 +309,7 @@ function ContactUs() {
             </form>
           </div>
 
-          <aside className="contact-sidebar">
-            <div className="contact-side-card contact-side-card-1">
-              <div className="contact-side-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
-              </div>
-              <h3 className="contact-side-title">Direct Channels</h3>
-              <p className="contact-side-desc">
-                Your message is transmitted simultaneously to both channels for maximum visibility.
-              </p>
-              <div className="contact-side-links">
-                <a href="mailto:bd@breakthru.ai" className="contact-side-link">
-                  <span className="contact-side-link-dot" style={{ background: '#6c5ce7' }} />
-                  bd@breakthru.ai
-                </a>
-                <a href="mailto:admin@breakthru.ai" className="contact-side-link">
-                  <span className="contact-side-link-dot" style={{ background: '#00b894' }} />
-                  admin@breakthru.ai
-                </a>
-              </div>
-            </div>
 
-            <div className="contact-side-card contact-side-card-2">
-              <div className="contact-side-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-              </div>
-              <h3 className="contact-side-title">Response SLA</h3>
-              <p className="contact-side-desc">
-                Standard response within 24 hours. Priority matters? Expect a reply within 4 hours on business days.
-              </p>
-              <div className="contact-side-sla">
-                <div className="contact-sla-bar">
-                  <div className="contact-sla-fill" />
-                </div>
-                <div className="contact-sla-labels">
-                  <span>0h</span>
-                  <span>4h</span>
-                  <span>24h</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="contact-side-card contact-side-card-3">
-              <div className="contact-side-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-              </div>
-              <h3 className="contact-side-title">Confidentiality</h3>
-              <p className="contact-side-desc">
-                All communications are encrypted and handled under strict NDA protocols. Your project details are safe with us.
-              </p>
-            </div>
-          </aside>
         </div>
       </section>
     </div>

@@ -6,6 +6,8 @@ function CareersPage() {
   const [careerStats, setCareerStats] = useState({ engineers: 0, hubs: 0, clients: 0, rating: 0 })
   const sectionRefs = useRef({})
   const hasAnimated = useRef(false)
+  const statsRef = useRef(null)
+  const [statsVisible, setStatsVisible] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -35,7 +37,21 @@ function CareersPage() {
   }, [])
 
   useEffect(() => {
-    if (!visibleSections.careers || hasAnimated.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    if (statsRef.current) observer.observe(statsRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!statsVisible || hasAnimated.current) return
 
     hasAnimated.current = true
 
@@ -61,7 +77,7 @@ function CareersPage() {
     }
 
     requestAnimationFrame(animate)
-  }, [visibleSections.careers])
+  }, [statsVisible])
 
   const setSectionRef = (id) => (el) => {
     sectionRefs.current[id] = el
@@ -71,8 +87,8 @@ function CareersPage() {
     <div className="wrapper-content">
       <div onClick={() => navigate('/')} className="floating-back-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"/>
-          <polyline points="12 19 5 12 12 5"/>
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
         </svg>
         Back to Home
       </div>
@@ -171,7 +187,7 @@ function CareersPage() {
           </div>
 
           {/* Stats */}
-          <div className="careers-stats">
+          <div className="careers-stats" ref={statsRef}>
             <div className="careers-stat-card">
               <span className="careers-stat-value">{careerStats.engineers}+</span>
               <span className="careers-stat-label">Engineers</span>
@@ -371,7 +387,7 @@ function CareersPage() {
             <p className="careers-cta-desc">
               We're always looking for exceptional talent. Send us your profile and let's talk.
             </p>
-            <a href="https://mail.google.com/mail/?view=cm&to=bd@breakthru.ai" target="_blank" rel="noopener noreferrer" className="careers-cta-button">
+            <a href="https://mail.google.com/mail/?view=cm&to=" target="_blank" rel="noopener noreferrer" className="careers-cta-button">
               <span>Send Your Profile</span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

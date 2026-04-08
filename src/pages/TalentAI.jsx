@@ -118,7 +118,7 @@ function TalentAI() {
             digital transformation goals, and evolving skill demands.
           </p>
           <p className="intro-paragraph">
-            Whether you&rsquo;rere structuring your talent supply chain,
+            Whether you&rsquo;re structuring your talent supply chain,
             deploying on-demand expertise, or embedding AI into L&amp;D &mdash;
             TalentAI is your workforce transformation partner.
           </p>
