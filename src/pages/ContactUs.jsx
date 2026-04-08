@@ -108,6 +108,15 @@ function ContactUs() {
     },
     {
       num: '03',
+      label: 'Schedule Meeting',
+      color: '#a29bfe',
+      type: 'buttons',
+      buttons: [
+        { label: 'Quick Schedule Meeting', link: 'https://outlook.office.com/book/BreakthrusPurpleFabric@breakthru.ai/' },
+      ]
+    },
+    {
+      num: '04',
       label: 'The Mission',
       color: '#fdcb6e',
       type: 'textarea',
@@ -217,6 +226,26 @@ function ContactUs() {
                           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                         </svg>
                         <span>{field.value}</span>
+                      </div>
+                    )}
+                    {field.type === 'buttons' && (
+                      <div className="contact-field-buttons">
+                        {field.buttons.map((btn, idx) => (
+                          <a
+                            key={idx}
+                            href={btn.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="contact-schedule-btn"
+                          >
+                            <span>{btn.label}</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                              <polyline points="15 3 21 3 21 9" />
+                              <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                          </a>
+                        ))}
                       </div>
                     )}
                     {field.type === 'textarea' && (

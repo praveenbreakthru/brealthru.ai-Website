@@ -49,8 +49,8 @@ function BreakthruLabsStory() {
     <div className="wrapper-content labs-story-page">
       <Link to="/" className="floating-back-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"/>
-          <polyline points="12 19 5 12 12 5"/>
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
         </svg>
         Back to Home
       </Link>
@@ -147,7 +147,7 @@ function BreakthruLabsStory() {
                   <li>Sentiment Analysis on Replies</li>
                   <li>Workflow Automation</li>
                 </ul>
-                <a href="/Nexz Bd.pdf" download className="ls-case-study-btn">Case Study</a>
+                <a href="/Nexz Bd.pptx" download className="ls-case-study-btn">Case Study</a>
               </div>
               <div className="ls-product-card-glow" />
             </div>
@@ -245,8 +245,8 @@ function BreakthruLabsStory() {
       <section className="ls-back-cta">
         <Link to="/" className="ls-back-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"/>
-            <polyline points="12 19 5 12 12 5"/>
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
           </svg>
           Back to Home
         </Link>
