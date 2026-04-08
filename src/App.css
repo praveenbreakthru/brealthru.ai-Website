@@ -7304,6 +7304,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 
 .fs-hero-animation-link {
@@ -7319,6 +7320,14 @@ img {
   max-width: 500px;
   height: auto;
   border-radius: 16px;
+}
+
+.fs-hero-animation-gif {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
 }
 
 .fs-hero-tag {
@@ -7984,11 +7993,47 @@ img {
 }
 
 .ls-hero-left {
-  width: 100%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
+.ls-hero-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+.ls-hero-animation-gif {
+  max-width: 600px;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  opacity: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.ls-hero-gemini-embed {
+  width: 100%;
+  max-width: 500px;
+  height: 600px;
+  border: 1px solid rgba(162, 155, 254, 0.2);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(162, 155, 254, 0.1);
+  overflow: hidden;
+}
+
+
 
 .ls-hero-tag {
   display: inline-flex;
@@ -8027,6 +8072,15 @@ img {
   50% {
     opacity: 0.6;
     transform: scale(0.85);
+  }
+}
+
+@keyframes ls-float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
   }
 }
 
@@ -8651,6 +8705,16 @@ img {
 @media (max-width: 1024px) {
   .ls-hero-content {
     padding: 100px 40px 60px;
+    flex-direction: column;
+  }
+
+  .ls-hero-left,
+  .ls-hero-right {
+    width: 100%;
+  }
+
+  .ls-hero-right {
+    margin-top: 40px;
   }
 
   .ls-context-inner,
@@ -8707,6 +8771,11 @@ img {
   .ls-back-cta {
     padding: 40px 40px 80px;
   }
+
+  .ls-hero-gemini-embed {
+    height: 500px;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -8752,6 +8821,11 @@ img {
 
   .ls-grind-text {
     font-size: 17px;
+  }
+
+  .ls-hero-gemini-embed {
+    height: 400px;
+    max-width: 100%;
   }
 }
 
