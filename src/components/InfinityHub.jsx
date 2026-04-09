@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const InfinityHub = () => {
   const [activePanel, setActivePanel] = useState(null);
 
   const togglePanel = (side, e) => {
     e.stopPropagation();
-    setActivePanel(prev => (prev === side ? null : side));
+    setActivePanel((prev) => (prev === side ? null : side));
   };
 
   const closePanels = (e) => {
@@ -14,141 +15,191 @@ const InfinityHub = () => {
     }
   };
 
+  // Helper Component for the 3D Hub Buttons
+  const HubButton = ({ href, onClick, icon, label, position, glowColor }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    const baseStyle = {
+      position: "absolute",
+      top: "50%",
+      transform: "translate(-50%, -50%)",
+      zIndex: 40,
+      width: "68px", // Reduced from 82px
+      height: "68px", // Reduced from 82px
+      borderRadius: "50%",
+      border: `1px solid rgba(255, 255, 255, ${isHovered ? "0.4" : "0.2"})`,
+      background: `rgba(255, 255, 255, ${isHovered ? "0.15" : "0.1"})`,
+      backdropFilter: "blur(12px)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      textDecoration: "none",
+      boxShadow: isHovered 
+        ? `0 0 40px ${glowColor}66, 0 0 20px ${glowColor}33`
+        : `0 0 30px rgba(255, 255, 255, 0.15)`,
+      transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+      scale: isHovered ? "1.15" : "1",
+      ...position
+    };
+
+    const content = (
+      <>
+        <img 
+          src={icon} 
+          alt={label}
+          style={{
+            width: "60%",
+            height: "60%",
+            objectFit: "contain",
+            filter: `drop-shadow(0 0 10px ${isHovered ? glowColor : "rgba(255,255,255,0.3)"})`,
+            transition: "all 0.4s ease",
+            transform: isHovered ? "rotate(5deg) scale(1.1)" : "none"
+          }}
+        />
+        <span style={{
+          fontSize: "8px", // Reduced from 9px
+          fontWeight: "900",
+          color: "#ffffff",
+          marginTop: "-1px",
+          letterSpacing: "1px",
+          fontFamily: "'Inter', sans-serif",
+          textShadow: `0 0 10px ${isHovered ? glowColor : "rgba(255,255,255,0.5)"}`,
+          opacity: isHovered ? 1 : 0.8
+        }}>
+          {label}
+        </span>
+      </>
+    );
+
+    if (href) {
+      return (
+        <Link 
+          to={href} 
+          onClick={onClick} 
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          style={baseStyle}
+        >
+          {content}
+        </Link>
+      );
+    }
+
+    return (
+      <div 
+        onClick={onClick} 
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={baseStyle}
+      >
+        {content}
+      </div>
+    );
+  };
+
   return (
     <div
       onClick={closePanels}
       style={{
         position: "relative",
         width: "100%",
-        height: "360px",
+        height: "300px", // Reduced from 360px
         background: "transparent",
-        marginTop: "-60px",
-        marginBottom: "-60px",
+        marginTop: "0px", 
+        marginBottom: "-25px", 
       }}
     >
-
       {/* CENTER HUB */}
       <div
         style={{
           position: "relative",
-          zIndex: 2,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           height: "100%",
         }}
       >
-        {/* LEFT CLICK */}
+        {/* LEFT CLICK AREA */}
         <div
           onClick={(e) => togglePanel("left", e)}
           style={{
             position: "absolute",
             left: 0,
-            width: "40%",
+            width: "35%",
             height: "100%",
             cursor: "pointer",
+            zIndex: 10,
           }}
         />
 
-        {/* RIGHT CLICK */}
+        {/* RIGHT CLICK AREA */}
         <div
           onClick={(e) => togglePanel("right", e)}
           style={{
             position: "absolute",
             right: 0,
-            width: "40%",
+            width: "35%",
             height: "100%",
             cursor: "pointer",
+            zIndex: 10,
           }}
         />
 
-        {/* SVG Infinity */}
-        <svg width="600" height="250" viewBox="0 0 800 380" style={{ transform: "translateY(-10px)", overflow: "visible" }}>
-          {/* Cyber Glow Path */}
-          <path
-            d="M400,190 C550,50 720,50 720,190 C720,330 550,330 400,190 C250,50 80,50 80,190 C80,330 250,330 400,190"
-            fill="none"
-            stroke="rgba(0, 242, 255, 0.4)"
-            strokeWidth="16"
-            style={{ filter: "drop-shadow(0 0 25px rgba(0, 242, 255, 0.9)) blur(3px)" }}
-          />
-          {/* Solid Core Path */}
-          <path
-            d="M400,190 C550,50 720,50 720,190 C720,330 550,330 400,190 C250,50 80,50 80,190 C80,330 250,330 400,190"
-            fill="none"
-            stroke="rgba(255,255,255,0.9)"
-            strokeWidth="4"
-          />
-
-          <text x="210" y="200" fill="#00f2ff" fontSize="22" textAnchor="middle">
-            Products
-          </text>
-          <text x="590" y="200" fill="#ff9d00" fontSize="22" textAnchor="middle">
-            Enterprises
-          </text>
-        </svg>
-
-        {/* LEFT PANEL */}
+        {/* GIF Infinity Container */}
         <div
-          className="panel"
           style={{
-            position: "absolute",
-            left: "5%",
-            top: "50%",
-            transform: "translateY(-50%)",
-            width: "260px",
-            padding: "20px",
-            borderRadius: "16px",
-            background: "rgba(0,0,20,0.9)",
-            color: "#fff",
-            opacity: activePanel === "left" ? 1 : 0,
-            transition: "0.4s",
-            pointerEvents: activePanel === "left" ? "auto" : "none",
+            position: "relative",
+            width: "650px", // Reduced from 850px
+            height: "300px", // Reduced from 400px
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "visible"
           }}
         >
-          <h3 style={{ color: "#00f2ff", marginBottom: '8px', marginTop: 0 }}>Digital Core</h3>
-          <p style={{ margin: 0, opacity: 0.8 }}>AI-driven systems and scalable data architecture.</p>
-        </div>
+          <img
+            src="https://i.pinimg.com/originals/46/72/92/467292e7374abcfcdbf0970bcbba97fd.gif"
+            alt="Infinity Loop"
+            style={{
+              width: "100%",
+              height: "auto",
+              mixBlendMode: "screen",
+              objectFit: "contain",
+              filter: "contrast(1.2) brightness(1.1)",
+              pointerEvents: "none"
+            }}
+          />
 
-        {/* RIGHT PANEL */}
-        <div
-          className="panel"
-          style={{
-            position: "absolute",
-            right: "5%",
-            top: "50%",
-            transform: "translateY(-50%)",
-            width: "260px",
-            padding: "20px",
-            borderRadius: "16px",
-            background: "rgba(0,0,20,0.9)",
-            color: "#fff",
-            opacity: activePanel === "right" ? 1 : 0,
-            transition: "0.4s",
-            pointerEvents: activePanel === "right" ? "auto" : "none",
-          }}
-        >
-          <h3 style={{ color: "#ff9d00", marginBottom: '8px', marginTop: 0 }}>Human Network</h3>
-          <p style={{ margin: 0, opacity: 0.8 }}>Collaboration systems for enterprise ecosystems.</p>
-        </div>
+          {/* HUB BUTTONS */}
+          
+          <HubButton 
+            label="PRODUCTS"
+            icon="https://cdn3d.iconscout.com/3d/premium/thumb/product-3d-icon-png-download-4863042.png"
+            position={{ left: "28%" }}
+            glowColor="#00f2ff"
+            onClick={(e) => togglePanel("left", e)}
+          />
 
-        {/* CENTER BUTTON */}
-        <button
-          style={{
-            position: "absolute",
-            bottom: "80px",
-            padding: "12px 40px",
-            borderRadius: "12px",
-            border: "none",
-            background:
-              "linear-gradient(135deg,#00f2ff,#a855f7,#ff9d00)",
-            color: "#fff",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          LABS
-        </button>
+          <HubButton 
+            href="/story/breakthru-labs"
+            label="LABS"
+            icon="https://cdn3d.iconscout.com/3d/premium/thumb/erlenmeyer-flask-3d-icon-png-download-8307202.png"
+            position={{ left: "50%" }}
+            glowColor="#ffffff"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          <HubButton 
+            label="ENTERPRISES"
+            icon="https://cdn3d.iconscout.com/3d/premium/thumb/enterprise-3d-icon-png-download-6184563.png"
+            position={{ left: "72%" }}
+            glowColor="#ff9d00"
+            onClick={(e) => togglePanel("right", e)}
+          />
+
+        </div>
       </div>
     </div>
   );

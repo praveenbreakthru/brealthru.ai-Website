@@ -84,9 +84,9 @@ function BreakthruLabsStory() {
             </div>
           </div>
           <div className="ls-hero-right">
-            <img 
-              src="https://s13.gifyu.com/images/bmPda.gif" 
-              alt="Breakthru Labs Animation" 
+            <img
+              src="https://s13.gifyu.com/images/bmPda.gif"
+              alt="Breakthru Labs Animation"
               className="ls-hero-animation-gif"
             />
           </div>
@@ -246,17 +246,6 @@ function BreakthruLabsStory() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Back CTA */}
-      <section className="ls-back-cta">
-        <Link to="/" className="ls-back-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12" />
-            <polyline points="12 19 5 12 12 5" />
-          </svg>
-          Back to Home
-        </Link>
       </section>
     </div>
   )
