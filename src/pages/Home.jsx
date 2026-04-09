@@ -633,16 +633,16 @@ function Home({ chatbotOpen, onCloseChatbot }) {
           {/* Industry Quick Nav Buttons */}
           <div className="ind-quicknav">
             {[
-              { label: 'BFSI', index: 0 },
-              { label: 'MANUFACTURING', index: 1 },
-              { label: 'TELECOM', index: 2 },
-              { label: 'RETAIL', index: 3 },
-              { label: 'HEALTHCARE', index: 4 },
-              { label: 'TRAVEL', index: 5 },
+              { label: 'BFSI', index: 0, theme: 'btn-bfsi' },
+              { label: 'MANUFACTURING', index: 1, theme: 'btn-mfg' },
+              { label: 'TELECOM', index: 2, theme: 'btn-telecom' },
+              { label: 'RETAIL', index: 3, theme: 'btn-retail' },
+              { label: 'HEALTHCARE', index: 4, theme: 'btn-healthcare' },
+              { label: 'TRAVEL', index: 5, theme: 'btn-travel' },
             ].map((item) => (
               <button
                 key={item.index}
-                className={`ind-quicknav-btn ${activeIndustry === item.index ? 'ind-quicknav-btn-active' : ''}`}
+                className={`ind-quicknav-btn ${item.theme} ${activeIndustry === item.index ? 'ind-quicknav-btn-active' : ''}`}
                 onClick={() => setActiveIndustry(item.index)}
               >
                 {item.label}

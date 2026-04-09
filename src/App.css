@@ -1403,7 +1403,7 @@ img {
    BREAKTHRU LABS SECTION
    ============================ */
 .labs-section {
-  padding: 120px 0;
+  padding: 60px 0;
   background: #06060f;
   position: relative;
   overflow: hidden;
@@ -1733,7 +1733,7 @@ img {
 
 @media (max-width: 768px) {
   .labs-section {
-    padding: 80px 0;
+    padding: 50px 0;
   }
 
   .labs-inner {
@@ -1762,8 +1762,8 @@ img {
    SERVICES SECTION (HOME)
    ============================ */
 .svc-section {
-  padding: 60px 0 80px;
-  background: #0f0f23;
+  padding: 30px 0 80px;
+  background: #000000;
   position: relative;
   overflow: hidden;
 }
@@ -1811,7 +1811,7 @@ img {
 
 /* --- Header --- */
 .svc-header {
-  margin-bottom: 72px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
@@ -2203,8 +2203,8 @@ img {
 
 /* --- How We Deliver --- */
 .svc-deliver {
-  padding: 80px 0 100px;
-  background: #0a0a1a;
+  padding: 40px 0 50px;
+  background: #000000;
   position: relative;
 }
 
@@ -2376,7 +2376,7 @@ img {
 
 @media (max-width: 768px) {
   .svc-section {
-    padding: 80px 0 40px;
+    padding: 40px 0 30px;
   }
 
   .svc-inner,
@@ -2429,7 +2429,7 @@ img {
 }
 
 .ind-section {
-  padding: 80px 0 0;
+  padding: 40px 0 0;
   background: #0f0f23;
   position: relative;
   overflow: hidden;
@@ -3319,7 +3319,7 @@ img {
 
 @media (max-width: 768px) {
   .ind-section {
-    padding: 80px 0;
+    padding: 40px 0;
   }
 
   .ind-inner {
@@ -3921,7 +3921,7 @@ img {
    CAREERS SECTION
    ============================ */
 .careers-section {
-  padding: 100px 0 120px;
+  padding: 50px 0 60px;
   background: #0f0f23;
   position: relative;
   overflow: hidden;
@@ -4587,7 +4587,7 @@ img {
 /* CTA */
 .careers-cta {
   text-align: center;
-  padding: 80px 40px;
+  padding: 40px 40px;
   border-radius: 24px;
   background: #0f0f23;
   /* Matched to section background */
@@ -5103,7 +5103,7 @@ img {
    WHAT WE OFFER
    ============================ */
 .what-we-offer {
-  padding: 100px 40px 60px;
+  padding: 50px 40px 30px;
 }
 
 /* ============================
@@ -5225,7 +5225,7 @@ img {
    HOW WE DELIVER
    ============================ */
 .deliver-section {
-  padding: 80px 80px 60px;
+  padding: 50px 40px 30px;
   text-align: center;
 }
 
@@ -5303,7 +5303,7 @@ img {
    CTA SECTION
    ============================ */
 .secondary-cta {
-  padding: 100px 80px 120px;
+  padding: 60px 40px 80px;
 }
 
 .cta-link {
@@ -5741,7 +5741,7 @@ img {
    ============================ */
 .about-hero-section {
   position: relative;
-  padding: 100px 80px 120px;
+  padding: 60px 40px 80px;
   background: #0f0f23;
   overflow: hidden;
 }
@@ -5936,7 +5936,7 @@ img {
    MANIFESTO SECTION
    ============================ */
 .manifesto-section {
-  padding: 100px 80px;
+  padding: 50px 40px;
   background: #0f0f23;
   position: relative;
 }
@@ -6407,7 +6407,7 @@ img {
    GLOBAL FOOTPRINT (HUBS)
    ============================ */
 .hubs-section {
-  padding: 100px 80px;
+  padding: 60px 40px;
   background: #0f0f23;
   position: relative;
   overflow: hidden;
@@ -7254,7 +7254,7 @@ img {
 /* --- Hero --- */
 .fs-hero {
   position: relative;
-  min-height: 70vh;
+  min-height: 55vh;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -7493,7 +7493,7 @@ img {
 
 /* --- Context Section --- */
 .fs-context {
-  padding: 100px 0;
+  padding: 50px 0;
 }
 
 .fs-context-inner {
@@ -7694,7 +7694,7 @@ img {
 
 /* --- The Grind Section --- */
 .fs-grind {
-  padding: 100px 0;
+  padding: 60px 0;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
 }
 
@@ -7984,7 +7984,7 @@ img {
 .ls-hero-content {
   position: relative;
   z-index: 2;
-  padding: 80px 80px 80px;
+  padding: 40px 40px;
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
@@ -8525,7 +8525,7 @@ img {
 
 /* --- The Grind Section --- */
 .ls-grind {
-  padding: 100px 0;
+  padding: 60px 0;
   background: linear-gradient(135deg, #06060f 0%, #1a1040 100%);
 }
 
@@ -8575,7 +8575,7 @@ img {
 
 /* --- The Impact Section --- */
 .ls-breakthrough {
-  padding: 100px 0;
+  padding: 60px 0;
 }
 
 .ls-breakthrough-inner {
@@ -8839,7 +8839,7 @@ img {
 /* --- HERO --- */
 .mfg-hero {
   position: relative;
-  min-height: 85vh;
+  min-height: 55vh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -9127,7 +9127,7 @@ img {
 
 /* --- Context Section --- */
 .mfg-context {
-  padding: 120px 0;
+  padding: 60px 0;
   background: #0a0a14;
 }
 
@@ -10156,7 +10156,7 @@ img {
 /* --- HERO --- */
 .tlc-hero {
   position: relative;
-  min-height: 85vh;
+  min-height: 55vh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -16199,7 +16199,49 @@ img {
 .ind-quicknav-btn-active:hover {
   background: #fff;
   color: #0a0a1a;
-  border-color: #fff;
+}
+
+/* Industry Specific Hover Colors */
+.ind-quicknav-btn.btn-bfsi:not(.ind-quicknav-btn-active):hover {
+  background: #0984e3;
+  border-color: #0984e3;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(9, 132, 227, 0.4);
+}
+
+.ind-quicknav-btn.btn-mfg:not(.ind-quicknav-btn-active):hover {
+  background: #e94560;
+  border-color: #e94560;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+}
+
+.ind-quicknav-btn.btn-telecom:not(.ind-quicknav-btn-active):hover {
+  background: #00cec9;
+  border-color: #00cec9;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0, 206, 201, 0.4);
+}
+
+.ind-quicknav-btn.btn-retail:not(.ind-quicknav-btn-active):hover {
+  background: #f39c12;
+  border-color: #f39c12;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
+}
+
+.ind-quicknav-btn.btn-healthcare:not(.ind-quicknav-btn-active):hover {
+  background: #00b894;
+  border-color: #00b894;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0, 184, 148, 0.4);
+}
+
+.ind-quicknav-btn.btn-travel:not(.ind-quicknav-btn-active):hover {
+  background: #6c5ce7;
+  border-color: #6c5ce7;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(108, 92, 231, 0.4);
 }
 
 /* ============================
